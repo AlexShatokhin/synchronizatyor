@@ -6,13 +6,13 @@ const prisma = new PrismaClient();
 class SerializationController {
     async handleJSON(req, res) {
         const data = req.body.data;
-        const filename = `jsonResult_.txt`;
+        const filename = `jsonResult.txt`;
 
         try {
             await FileUtils.writeFile(filename, data);
             await prisma.logs.create({
                 data: {
-                    status: 'SUCCESS',
+                    status: 'success',
                     message: 'JSON file has been saved successfully',
                 },
             });
@@ -20,7 +20,7 @@ class SerializationController {
         } catch (error) {
             await prisma.logs.create({
                 data: {
-                    status: 'ERROR',
+                    status: 'error',
                     message: `Error saving JSON file: ${error.message}`,
                 },
             });
@@ -33,7 +33,7 @@ class SerializationController {
             if (err) {
                 await prisma.logs.create({
                     data: {
-                        status: 'ERROR',
+                        status: 'error',
                         message: `Error parsing XML: ${err.message}`,
                     },
                 });
@@ -45,7 +45,7 @@ class SerializationController {
                 await FileUtils.writeFile(filename, result);
                 await prisma.logs.create({
                     data: {
-                        status: 'SUCCESS',
+                        status: 'success',
                         message: 'XML file has been saved successfully',
                     },
                 });
@@ -53,7 +53,7 @@ class SerializationController {
             } catch (error) {
                 await prisma.logs.create({
                     data: {
-                        status: 'ERROR',
+                        status: 'error',
                         message: `Error saving XML file: ${error.message}`,
                     },
                 });

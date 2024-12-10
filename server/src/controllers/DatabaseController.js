@@ -18,13 +18,13 @@ class DatabaseController {
             const filePath = path.join(__dirname, `result.txt`);
             await FileUtils.writeFile(filePath, JSON.stringify(result));
             await prisma.logs.create({
-                status: "SUCCESS",
+                status: "success",
                 message: "Query executed successfully",
             })
             res.status(200).send("Query executed successfully");
         } catch (err) {
             await prisma.logs.create({
-                status: "ERROR",
+                status: "error",
                 message: err.message,
             })
             res.status(500).send("Error executing query");
@@ -47,13 +47,13 @@ class DatabaseController {
             const filePath = path.join(__dirname, `result.txt`);
             await FileUtils.writeFile(filePath, JSON.stringify(result.rows));
             await prisma.logs.create({
-                status: "SUCCESS",
+                status: "success",
                 message: "Query executed successfully",
             })
             res.status(200).send("Query executed successfully");
         } catch (err) {
             await prisma.logs.create({
-                status: "ERROR",
+                status: "error",
                 message: err.message,
             })
             res.status(500).send("Error executing query");

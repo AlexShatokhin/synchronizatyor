@@ -2,11 +2,13 @@ const routes = require("express").Router();
 const DatabaseController = require("../controllers/DatabaseController");
 const SerializationController = require("../controllers/SerializationController");
 
-routes.post("/mysql", DatabaseController.handleMySQL);
-routes.post("/postgres", DatabaseController.handlePostgres);
+const ensureAuthenticated = require("../middlewares/ensureAuthenticated");
 
-routes.post("/json", SerializationController.handleJSON);
-routes.post("/xml", SerializationController.handleXml);
+routes.post("/mysql", ensureAuthenticated, DatabaseController.handleMySQL);
+routes.post("/postgres", ensureAuthenticated, DatabaseController.handlePostgres);
+
+routes.post("/json", ensureAuthenticated, SerializationController.handleJSON);
+routes.post("/xml", ensureAuthenticated, SerializationController.handleXml);
 
 module.exports = routes;
 
