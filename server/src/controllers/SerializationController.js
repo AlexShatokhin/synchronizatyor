@@ -12,7 +12,6 @@ class SerializationController {
             await FileUtils.writeFile(filename, data);
             await prisma.logs.create({
                 data: {
-                    task_id: req.body.taskID, // замените на реальный task_id
                     status: 'SUCCESS',
                     message: 'JSON file has been saved successfully',
                 },
@@ -21,8 +20,7 @@ class SerializationController {
         } catch (error) {
             await prisma.logs.create({
                 data: {
-                    task_id: req.body.taskID, // замените на реальный task_id
-                    status: 'FAILURE',
+                    status: 'ERROR',
                     message: `Error saving JSON file: ${error.message}`,
                 },
             });
@@ -35,8 +33,7 @@ class SerializationController {
             if (err) {
                 await prisma.logs.create({
                     data: {
-                        task_id: req.body.taskID, // замените на реальный task_id
-                        status: 'error',
+                        status: 'ERROR',
                         message: `Error parsing XML: ${err.message}`,
                     },
                 });
@@ -48,8 +45,7 @@ class SerializationController {
                 await FileUtils.writeFile(filename, result);
                 await prisma.logs.create({
                     data: {
-                        task_id: req.body.taskID, // замените на реальный task_id
-                        status: 'success',
+                        status: 'SUCCESS',
                         message: 'XML file has been saved successfully',
                     },
                 });
@@ -57,8 +53,7 @@ class SerializationController {
             } catch (error) {
                 await prisma.logs.create({
                     data: {
-                        task_id: req.body.taskID, // замените на реальный task_id
-                        status: 'error',
+                        status: 'ERROR',
                         message: `Error saving XML file: ${error.message}`,
                     },
                 });
