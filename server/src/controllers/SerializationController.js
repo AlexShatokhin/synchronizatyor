@@ -3,6 +3,8 @@ const parseString = require("xml2js").parseString;
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
+const {sendEmail} = require('../services/EmailService');
+
 class SerializationController {
     async handleJSON(req, res) {
         const data = req.body.data;
@@ -16,6 +18,9 @@ class SerializationController {
                     message: 'JSON file has been saved successfully',
                 },
             });
+            if(req.body.email){
+                sendEmail(req.body.email, 'JSON file has been saved successfully', 'The result is attached', filename);
+            }
             res.send({ message: "JSON file has been saved successfully!" });
         } catch (error) {
             await prisma.logs.create({
@@ -24,6 +29,9 @@ class SerializationController {
                     message: `Error saving JSON file: ${error.message}`,
                 },
             });
+            if(req.body.email){
+                sendEmail(req.body.email, 'Error saving JSON file', error.message);
+            }
             res.status(500).send({ error: "Error saving JSON file" });
         }
     }
@@ -49,6 +57,9 @@ class SerializationController {
                         message: 'XML file has been saved successfully',
                     },
                 });
+                if(req.body.email){
+                    sendEmail(req.body.email, 'XML file has been saved successfully', 'The result is attached', filename);
+                }
                 res.send({ message: "XML file has been saved successfully!" });
             } catch (error) {
                 await prisma.logs.create({
@@ -57,6 +68,9 @@ class SerializationController {
                         message: `Error saving XML file: ${error.message}`,
                     },
                 });
+                if(req.body.email){
+                    sendEmail(req.body.email, 'Error saving XML file', error.message);
+                }
                 res.status(500).send({ error: "Error saving XML file" });
             }
         });
