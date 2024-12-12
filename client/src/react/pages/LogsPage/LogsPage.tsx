@@ -1,13 +1,14 @@
 import { FC } from "react";
 import NavigationMenu from "../../modules/NavigationMenu";
+import PageWrapper from "../../UI/PageWrapper/PageWrapper";
 
 const LogsPage : FC = () => {
     return (
-        <div>
+        <PageWrapper>
             <NavigationMenu />
             <h1>Logs page</h1>
 
-        </div>
+        </PageWrapper>
     )
 }
 

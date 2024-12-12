@@ -1,12 +1,13 @@
 import { FC } from "react";
 import NavigationMenu from "../../modules/NavigationMenu"
+import PageWrapper from "../../UI/PageWrapper/PageWrapper";
 
 const SettingsPage : FC = () => {
     return (
-        <div>
+        <PageWrapper>
             <NavigationMenu />
             <h1>Settings page</h1>
-        </div>
+        </PageWrapper>
     )
 }
 
