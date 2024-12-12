@@ -1,7 +1,8 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import {BiShow, BiHide} from "react-icons/bi";
 import "./input.scss"
 import { colors } from "../../../constants/colors";
+import useToggle from "../../hooks/useToggle";
 
 type InputPropsType = {
     className?: string,
@@ -12,11 +13,7 @@ type InputPropsType = {
 }
 
 const Input : FC<InputPropsType> = ({className, value, placeholder, type, onChange}) => {
-    const [showPassword, setShowPassword] = useState(false);
-
-    const toggleShowPassword = () => {
-        setShowPassword(!showPassword);
-    }
+    const [showPassword, toggleShowPassword] = useToggle(false);
 
     return (
         <div className={`input-wrapper ${className}`}>
