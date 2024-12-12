@@ -1,10 +1,13 @@
+import Login from "../../../modules/Login";
+import Registration from "../../../modules/Registration";
+
 export const routes = [
-    {path: "/", component: null, isPrivate: false},
-    {path: "/register", component: null, isPrivate: false},
+    {path: "/", component: Login, isPrivate: false},
+    {path: "/register", component: Registration, isPrivate: false},
 
-    {path: "/home", component: null, isPrivate: true},
-    {path: "/settings", component: null, isPrivate: true},
+    {path: "/home", component: () => <></>, isPrivate: true},
+    {path: "/settings", component: () => <></>, isPrivate: true},
 
-    {path: "*", component: null, isPrivate: false},
+    {path: "*", component: () => <></>, isPrivate: false},
 
 ]

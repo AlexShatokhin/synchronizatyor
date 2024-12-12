@@ -6,7 +6,7 @@ type PrivateRouteProps = {
 }
 
 const PrivateRoute : FC<PrivateRouteProps> = ({isAuthenticated}) => {
-    return isAuthenticated ? <Outlet /> : <Navigate to="/login" />
+    return isAuthenticated ? <Outlet /> : <Navigate to="/" />
 }
 
 export default PrivateRoute;
