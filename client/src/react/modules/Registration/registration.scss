@@ -21,8 +21,11 @@
     }
 }
 
-.login__inputs{
-    input{
-        width: 350px;
+.login__statuses{
+    .badge-status{
+        margin-bottom: 15px;
+    }
+    .badge-status:last-child{
+        margin-bottom: 0;
     }
 }

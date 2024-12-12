@@ -11,6 +11,9 @@
         &_PENDING{
             background-color: $grey;
         }
+        &_COMPLETE{
+            background-color: $green;
+        }
     }
     &__text{
         font-size: 15px;
