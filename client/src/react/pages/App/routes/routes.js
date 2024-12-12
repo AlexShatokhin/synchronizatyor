@@ -7,7 +7,7 @@ export const routes = [
     {path: "/register", component: Registration, isPrivate: false},
 
     {path: "/home", component: () => <></>, isPrivate: true},
-    {path: "/logs", component: LogsPage, isPrivate: false},
+    {path: "/logs", component: LogsPage, isPrivate: true},
     {path: "/settings", component: () => <></>, isPrivate: true},
 
     {path: "*", component: () => <></>, isPrivate: false},

@@ -4,9 +4,11 @@ const useHttp = () => {
     const [loading, setLoading] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
 
-    const fetchData = useCallback(async (url : string, method = "GET", body : string | null = null, headers = {"Content-type": "application/json"}) => {
+    const fetchData = useCallback(async (url : string, method = "GET", body : string | null = null, headers : Record<string, string> = {"Content-type": "application/json"}) => {
         setLoading(true);
         setError(null);
+
+
         try {
             const response = await fetch(url, {method, headers, body});
             if (!response.ok) {

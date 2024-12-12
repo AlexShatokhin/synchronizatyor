@@ -12,7 +12,6 @@ class AuthrizationController {
                     email,
                 }
             })
-            //const userResult = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
             if (!userCheck) 
                 return res.status(400).json({ message: 'Invalid username or password' });
     
@@ -26,7 +25,7 @@ class AuthrizationController {
     
             // Установка сессии
             req.session.userId = userCheck.id;
-            res.status(200).json({ message: 'Login successful' });
+            res.status(200).json({ message: 'Login successful', ok: true, user: email });
         } catch (error) {
             console.error('Error logging in user:', error);
             res.status(500).json({ message: 'Failed to log in', error: error.message });

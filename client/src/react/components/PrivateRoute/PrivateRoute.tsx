@@ -1,12 +1,10 @@
 import { FC } from "react"
 import { Navigate, Outlet } from "react-router-dom"
 
-type PrivateRouteProps = {
-    isAuthenticated: boolean
-}
 
-const PrivateRoute : FC<PrivateRouteProps> = ({isAuthenticated}) => {
-    return isAuthenticated ? <Outlet /> : <Navigate to="/" />
+const PrivateRoute : FC = () => {
+    const storedUser = sessionStorage.getItem("user");
+    return storedUser && storedUser !== "undefined" ? <Outlet /> : <Navigate to="/" />
 }
 
 export default PrivateRoute;

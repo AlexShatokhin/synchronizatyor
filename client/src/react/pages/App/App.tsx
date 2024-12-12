@@ -10,7 +10,7 @@ function App() {
             {
                 routes.map((route) => {
                     return route.isPrivate ? (
-                        <Route key={route.path} element={<PrivateRoute isAuthenticated = {false}/>}>
+                        <Route key={route.path} element={<PrivateRoute />}>
                             <Route path={route.path} element={<route.component />}/>
                         </Route>
                     ) : <Route key={route.path} path={route.path} element={<route.component />}/>

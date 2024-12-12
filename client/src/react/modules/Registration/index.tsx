@@ -74,19 +74,19 @@ const Registration : FC = () => {
                     </div>
                     <div className="login__statuses">
                         <BadgeStatus 
-                            status={validationChecks[3] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.PENDING}
+                            status={validationChecks[3] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.FAIL}
                             showText
                             text="Почта содержит @"/>
                         <BadgeStatus 
-                            status={validationChecks[0] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.PENDING}
+                            status={validationChecks[0] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.FAIL}
                             showText
                             text="Пароль содержит не менее 6 символов"/>
                         <BadgeStatus 
-                            status={validationChecks[1] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.PENDING}
+                            status={validationChecks[1] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.FAIL}
                             showText
                             text="Пароль содержит большую букву A-Z"/>
                         <BadgeStatus 
-                            status={validationChecks[2] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.PENDING}
+                            status={validationChecks[2] ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.FAIL}
                             showText
                             text="Пароль содержит цифры 0-9"/>
                     </div>

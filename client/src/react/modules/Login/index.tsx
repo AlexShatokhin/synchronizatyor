@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Input from "../../UI/Input/Input";
 import Title from "../../UI/Title/Title";
@@ -15,6 +15,13 @@ const Login : FC = () => {
 
     const {fetchData, loading} = useHttp();
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem("user");
+        if (storedUser && storedUser !== "undefined") {
+            navigate("/logs"); // Перенаправление авторизованного пользователя
+        }
+    }, [navigate]);
 
     const handleLogin = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -37,12 +44,13 @@ const Login : FC = () => {
             password
         }
         fetchData("http://localhost:4000/api/login", "POST", JSON.stringify(data))
-        .then(() => {
+        .then((res) => {
             setError("");
+            sessionStorage.setItem("user", JSON.stringify(res.user)); // Сохранение данных пользователя в sessionStorage
             navigate("/logs");
             console.log("Успешная авторизация")
         })
-        .catch(() => setError("Ошибка авторизации"))
+        .catch(() => setError("Неверный логин или пароль"))
     }
 
     return (
