@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 class AuthrizationController {
     async login(req, res){
-        const { email, password } = req.body;
+        const { email, name, password } = req.body;
         try {
             // Проверка пользователя в базе данных
             const userCheck = await prisma.users.findUnique({
@@ -23,9 +23,15 @@ class AuthrizationController {
                 return res.status(400).json({ message: 'Invalid username or password' });
             }
     
+            const sendedData = {
+                email: userCheck.email,
+                name: userCheck.name,
+                id: userCheck.id,
+            }
+
             // Установка сессии
             req.session.userId = userCheck.id;
-            res.status(200).json({ message: 'Login successful', ok: true, user: email });
+            res.status(200).json({ message: 'Login successful', ok: true, user: sendedData });
         } catch (error) {
             console.error('Error logging in user:', error);
             res.status(500).json({ message: 'Failed to log in', error: error.message });
@@ -33,7 +39,7 @@ class AuthrizationController {
     }
 
     async register(req, res){
-        const { email, password } = req.body;
+        const { email, name, password } = req.body;
 
         try {
             // Проверка существования пользователя
@@ -51,6 +57,7 @@ class AuthrizationController {
             await prisma.users.create({
                 data: {
                     email,
+                    name,
                     password: hashedPassword
                 }
             })
