@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import NavigationMenu from "../modules/NavigationMenu/slice/NavigationMenuSlice"
+import userData from "../slice/userSlice"
 
 const store = configureStore({
     reducer: {
-      NavigationMenu
+      NavigationMenu,
+      userData
     },
 });
 

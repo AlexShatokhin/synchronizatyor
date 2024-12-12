@@ -1,11 +1,13 @@
 import { FC, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useTypedDispatch } from "../../hooks/useRedux";
 import Input from "../../UI/Input/Input";
 import Title from "../../UI/Title/Title";
 
 import "./login.scss"
 import Button from "../../UI/Button/Button";
 import useHttp from "../../hooks/useHttp";
+import { login } from "../../slice/userSlice";
 
 
 const Login : FC = () => {
@@ -13,6 +15,7 @@ const Login : FC = () => {
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
 
+    const dispatch = useTypedDispatch();
     const {fetchData, loading} = useHttp();
     const navigate = useNavigate();
 
@@ -46,7 +49,7 @@ const Login : FC = () => {
         fetchData("http://localhost:4000/api/login", "POST", JSON.stringify(data))
         .then((res) => {
             setError("");
-            sessionStorage.setItem("user", JSON.stringify(res.user)); // Сохранение данных пользователя в sessionStorage
+            dispatch(login(res.user));
             navigate("/logs");
             console.log("Успешная авторизация")
         })

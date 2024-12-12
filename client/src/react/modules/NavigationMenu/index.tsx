@@ -1,5 +1,6 @@
 import { useTypedSelector, useTypedDispatch } from "../../hooks/useRedux";
 import { changeActiveElement } from "./slice/NavigationMenuSlice";
+import { logout } from "../../slice/userSlice";
 import useHttp from "../../hooks/useHttp";
 
 import { SlLogout } from "react-icons/sl";
@@ -13,14 +14,15 @@ import "./navigation_menu.scss"
 const NavigationMenu = () => {
     const {fetchData} = useHttp();
     const activeElement = useTypedSelector(state => state.NavigationMenu.activeElement);
+    const {email, name} = useTypedSelector(state => state.userData);
     const dispatch = useTypedDispatch();
 
     const handleChangeActiveElement = (element : "logs" | "home" | "settings") => {
         dispatch(changeActiveElement(element));
     }
 
-    const logout = () => {
-        sessionStorage.removeItem("user");
+    const handleLogout = () => {
+        dispatch(logout());
         window.location.reload();
         fetchData("http://localhost:4000/api/logout", "POST");
     }
@@ -28,8 +30,8 @@ const NavigationMenu = () => {
     return (
         <section className="menu">
             <div className="profile-info">
-                <div className="profile-info__name">Test</div>
-                <div className="profile-info__email">test@test</div>
+                <div className="profile-info__name">{name}</div>
+                <div className="profile-info__email">{email}</div>
             </div>
             <MenuItem 
                 active = {activeElement === "logs"} 
@@ -54,7 +56,7 @@ const NavigationMenu = () => {
 
 
             <MenuItem 
-                onClick={logout} 
+                onClick={handleLogout} 
                 className = "menu-logout" 
                 path="/" 
                 icon={<SlLogout />} 
