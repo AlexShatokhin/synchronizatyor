@@ -4,11 +4,14 @@ import { LuLogs } from "react-icons/lu";
 import { MdDownload } from "react-icons/md";
 import MenuItem from "./UI/MenuItem/MenuItem";
 
+import "./navigation_menu.scss"
+
 const NavigationMenu = () => {
 
     return (
         <section className="menu">
             <div className="profile-info">
+                <div className="profile-info__name">Test</div>
                 <div className="profile-info__email">test@test</div>
             </div>
             <MenuItem active path="/logs" icon={<LuLogs />} title="Логирование" />
