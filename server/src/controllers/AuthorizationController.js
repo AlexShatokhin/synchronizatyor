@@ -61,6 +61,16 @@ class AuthrizationController {
             res.status(500).json({ message: 'Failed to register user', error: error.message, ok: false });
         }
     }
+
+    async logout(req, res){
+        try {
+            req.session.destroy();
+            res.status(200).json({ message: 'Logout successful', ok: true });
+        } catch (error) {
+            console.error('Error logging out user:', error);
+            res.status(500).json({ message: 'Failed to log out', error: error.message });
+        }
+    }
 }
 
 module.exports = new AuthrizationController();

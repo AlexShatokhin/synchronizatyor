@@ -9,13 +9,14 @@ type MenuItemPropsType = {
     active?: boolean,
     path: string,
     title: string,
-    className?: string
+    className?: string,
+    onClick?: () => void
 }
 
-const MenuItem : FC<MenuItemPropsType> = ({icon, path, title, className, active}) => {
+const MenuItem : FC<MenuItemPropsType> = ({icon, path, title, className, active, onClick}) => {
     return (
         <div className={`menu__item ${active ? "menu__item-active" : ""} ${className}`}>
-            <Link to={path}>
+            <Link onClick={onClick} to={path}>
                 {icon}
                 <span>{title}</span>
             </Link>
