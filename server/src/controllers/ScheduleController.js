@@ -5,6 +5,16 @@ const SerializationController = require('./SerializationController');
 
 class ScheduleController {
     scheduledTasks = {};
+    removeSchedule = (req, res) => {
+        const { sourceType } = req.body;
+        if (this.scheduledTasks[sourceType]) {
+            this.scheduledTasks[sourceType].stop();
+            delete this.scheduledTasks[sourceType];
+            return res.status(200).json({ message: `Schedule removed for ${sourceType}` });
+        } else {
+            return res.status(404).json({ message: `No schedule found for ${sourceType}` });
+        }
+    }
     setSchedule = (req, res) => {
         const { sourceType, cronExpression, isSingular, ...args } = req.body;
 
