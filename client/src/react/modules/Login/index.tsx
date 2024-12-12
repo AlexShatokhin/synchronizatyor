@@ -1,15 +1,20 @@
 import { FC, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Input from "../../UI/Input/Input";
 import Title from "../../UI/Title/Title";
 
 import "./login.scss"
 import Button from "../../UI/Button/Button";
+import useHttp from "../../hooks/useHttp";
+
 
 const Login : FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [error, setError] = useState<string>("");
+
+    const {fetchData, loading} = useHttp();
+    const navigate = useNavigate();
 
     const handleLogin = (e: React.MouseEvent) => {
         e.preventDefault();
@@ -20,13 +25,24 @@ const Login : FC = () => {
         } else if (password.length < 6) {
             errorMessage = "Пароль должен содержать не менее 6 символов";
         } else {
-            // Здесь можно добавить логику авторизации
-            // Если авторизация не удалась, установить сообщение об ошибке
-            // errorMessage = "Ошибка авторизации.";
-            console.log("Email: ", email);
+            userAuth();
         }
 
         setError(errorMessage);
+    }
+
+    const userAuth = async () => {
+        const data = {
+            email, 
+            password
+        }
+        fetchData("http://localhost:4000/api/login", "POST", JSON.stringify(data))
+        .then(() => {
+            setError("");
+            navigate("/logs");
+            console.log("Успешная авторизация")
+        })
+        .catch(() => setError("Ошибка авторизации"))
     }
 
     return (

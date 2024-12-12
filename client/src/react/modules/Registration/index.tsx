@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 import BadgeStatus from "../../UI/BadgeStatus/BadgeStatus";
 import { SynchronizationStatusEnum } from "../../types/SynchronizationStatusEnum";
 
+import useHttp from "../../hooks/useHttp";
+
 import { IoChevronBack } from "react-icons/io5";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
@@ -15,6 +17,8 @@ const Registration : FC = () => {
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [validationChecks, setValidationChecks] = useState<boolean[]>([false, false, false, false]);
+    const [registrationStatus, setRegistrationStatus] = useState<"complete" | "fail" | "idle">("idle");
+    const {fetchData, loading, error} = useHttp();
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -29,11 +33,21 @@ const Registration : FC = () => {
         newValidationChecks[0] = e.target.value.length >= 6;
         newValidationChecks[1] = /[A-Z]/.test(e.target.value);
         newValidationChecks[2] = /\d/.test(e.target.value);
+        newValidationChecks[3] = validationChecks[3];
         setValidationChecks(newValidationChecks);
     }
 
     const handleRegistration = (e : React.MouseEvent) => {
         e.preventDefault();
+        const data = {
+            email,
+            password
+        }
+        fetchData("http://localhost:4000/api/register", "POST", JSON.stringify(data))
+        .then(() => {
+            setRegistrationStatus("complete");
+        })
+        .catch(() => setRegistrationStatus("fail"));
     }
 
     return (
@@ -77,6 +91,8 @@ const Registration : FC = () => {
                             text="Пароль содержит цифры 0-9"/>
                     </div>
                     <Button onClick={handleRegistration} disabled = {!(validationChecks[0] && validationChecks[1] && validationChecks[2] && validationChecks[3])} className="login__content-button" title="Регистрация"/>
+                    {registrationStatus === "complete" && <div className="login__status login__status-complete">Регистрация прошла успешно</div>}
+                    {registrationStatus === "fail" && <div className="login__status login__status-fail">Ошибка регистрации</div>}
                 </form>
             </div> 
         </section>

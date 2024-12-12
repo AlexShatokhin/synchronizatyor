@@ -29,3 +29,14 @@
         margin-bottom: 0;
     }
 }
+
+.login__status{
+    text-align: center;
+    margin-top: 10px;
+    &-complete {
+        color: $green;
+    }
+    &-fail {
+        color: $red;
+    }
+}
