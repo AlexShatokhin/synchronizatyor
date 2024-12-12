@@ -1,0 +1,41 @@
+@import "../../../constants/_colors";
+
+.menu{
+    width: 300px;
+    height: 100vh;
+    position: relative;
+
+    .profile-info{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-left: 40px;
+        height: 80px;
+        border-bottom: $lightgrey 2px solid;
+        margin-bottom: 20px;
+        &__name{
+            font-size: 25px;
+            font-weight: 500;
+        }
+        &__email{
+            font-size: 15px;
+            color: $grey;
+            font-weight: 300;
+        }
+    }
+
+    &-logout{
+        position: absolute;
+        bottom: 40px;
+        width: 100%;
+        a{
+            color: $grey;
+            font-size: 20px;
+        }
+        a:hover{
+            color: $black;
+            background-color: transparent;
+            border-left-color: transparent;
+        }
+    }
+}

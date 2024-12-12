@@ -1,0 +1,42 @@
+@import "../../../constants/__colors";
+
+.registration__navigation{
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    a{
+        display: flex;
+        align-items: center;
+        font-weight: 600;
+        font-size: 18px;
+        text-decoration: none;
+        span{
+            margin-left: 20px;
+            color: $black;
+            transition: .3s all;
+        }
+        span:hover{
+            color: $blue;
+        }
+    }
+}
+
+.login__statuses{
+    .badge-status{
+        margin-bottom: 15px;
+    }
+    .badge-status:last-child{
+        margin-bottom: 0;
+    }
+}
+
+.login__status{
+    text-align: center;
+    margin-top: 10px;
+    &-complete {
+        color: $green;
+    }
+    &-fail {
+        color: $red;
+    }
+}

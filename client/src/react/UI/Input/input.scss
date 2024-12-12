@@ -1,0 +1,32 @@
+@import "../../../constants/__colors.scss";
+
+.input-wrapper {
+    position: relative;
+    display: inline-block;
+    input {
+        border: 2px solid $blue;
+        border-color: transparent;
+        background-color: $lightgrey;
+        padding: 10px;
+        padding-right: 35px;
+        font-size: 16px;
+        border-radius: 5px;
+        color: $black;
+        font-weight: 600;
+        outline: none;
+    }
+
+    input:focus {
+        border-color: $blue;
+    }
+
+    .toggle-password{
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-70%);
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,25 @@
+@import "../../../constants/__colors";
+
+.badge-status{
+    display: flex;
+    align-items: center;
+    &__icon{
+        width: 10px;
+        height: 10px;
+        border-radius: 100%;
+        margin-right: 10px;
+        &_PENDING{
+            background-color: $grey;
+        }
+        &_COMPLETE{
+            background-color: $green;
+        }
+        &_FAIL{
+            background-color: $red;
+        }
+    }
+    &__text{
+        font-size: 15px;
+        color: $black;
+    }
+}
