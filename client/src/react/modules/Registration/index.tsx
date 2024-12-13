@@ -12,6 +12,7 @@ import Title from "../../UI/Title/Title";
 
 import "./registration.scss";
 import { colors } from "../../../constants/colors";
+import Spinner from "../../UI/Spinner/Spinner";
 
 const Registration : FC = () => {
     const [name, setName] = useState<string>("");
@@ -19,7 +20,7 @@ const Registration : FC = () => {
     const [password, setPassword] = useState<string>("");
     const [validationChecks, setValidationChecks] = useState<boolean[]>([false, false, false, false, false]);
     const [registrationStatus, setRegistrationStatus] = useState<"complete" | "fail" | "idle">("idle");
-    const {fetchData, loading, error} = useHttp();
+    const {fetchData, loading} = useHttp();
 
     const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setEmail(e.target.value);
@@ -110,7 +111,11 @@ const Registration : FC = () => {
                             showText
                             text="Пароль содержит цифры 0-9"/>
                     </div>
-                    <Button onClick={handleRegistration} disabled = {!validationChecks.every(item => item)} className="login__content-button" title="Регистрация"/>
+                    <Button 
+                        onClick={handleRegistration} 
+                        disabled = {!validationChecks.every(item => item)} 
+                        className="login__content-button" 
+                        title={loading ? <Spinner /> : "Регистрация"}/>
                     {registrationStatus === "complete" && <div className="login__status login__status-complete">Регистрация прошла успешно</div>}
                     {registrationStatus === "fail" && <div className="login__status login__status-fail">Ошибка регистрации</div>}
                 </form>

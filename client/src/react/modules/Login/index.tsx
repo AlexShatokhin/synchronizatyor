@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useTypedDispatch } from "../../hooks/useRedux";
 import Input from "../../UI/Input/Input";
 import Title from "../../UI/Title/Title";
+import Spinner from "../../UI/Spinner/Spinner";
 
 import "./login.scss"
 import Button from "../../UI/Button/Button";
@@ -22,7 +23,7 @@ const Login : FC = () => {
     useEffect(() => {
         const storedUser = sessionStorage.getItem("user");
         if (storedUser && storedUser !== "undefined") {
-            navigate("/logs"); // Перенаправление авторизованного пользователя
+            navigate("/logs");
         }
     }, [navigate]);
 
@@ -77,8 +78,9 @@ const Login : FC = () => {
                             className="login__inputs-item" />
                     </div>
                     <div className="error-message">
-                    {error && <div className="login__error">{error}</div>}                    </div>
-                    <Button onClick={handleLogin} className="login__content-button" title="Войти"/>
+                        {error && <div className="login__error">{error}</div>}                    
+                    </div>
+                    <Button onClick={handleLogin} className="login__content-button" title={loading ? <Spinner /> : "Войти"}/>
                 </form>
                 <div className="login__navigation">
                     <Link to="/register">Нет аккаунта? Зарегистрируйтесь!</Link>

@@ -1,8 +1,8 @@
-import { FC } from "react";
+import { FC, ReactElement } from "react";
 import "./button.scss";
 
 type ButtonPropsType = {
-    title: string;
+    title: string | ReactElement;
     className?: string;
     onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
     disabled?: boolean;
