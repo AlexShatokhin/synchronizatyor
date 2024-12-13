@@ -1,10 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-const persistedUser = localStorage.getItem('user')
-
 const userSlice = createSlice({
     name: 'user',
-    initialState: persistedUser ? JSON.parse(persistedUser) : {
+    initialState: {
         id: null,
         name: null,
         email: null,

@@ -1,9 +1,20 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import { useTypedDispatch } from "../../hooks/useRedux";
+import { login } from "../../slice/userSlice";
 import PrivateRoute from "../../components/PrivateRoute/PrivateRoute";
 
 import { routes } from "./routes/routes";
 
 function App() {
+    const dispatch = useTypedDispatch();
+    useEffect(() => {
+        const storedUser = sessionStorage.getItem("user");
+        if (storedUser && storedUser !== "undefined") {
+            dispatch(login(JSON.parse(storedUser)));
+        }
+    }, [dispatch])
+
   return (
     <div className="App">
         <Routes>
