@@ -22,6 +22,7 @@ class DatabaseController {
             await prisma.logs.create({
                 status: "success",
                 message: "Query executed successfully",
+                user_id: req.body.id
             })
             if(req.body.email){
                 sendEmail(req.body.email, "Query executed successfully", "The result is attached", filePath);
@@ -34,6 +35,7 @@ class DatabaseController {
             await prisma.logs.create({
                 status: "error",
                 message: err.message,
+                user_id: req.body.id
             })
             res.status(500).send("Error executing query");
         } finally {
@@ -60,6 +62,7 @@ class DatabaseController {
             await prisma.logs.create({
                 status: "success",
                 message: "Query executed successfully",
+                user_id: req.body.id
             })
             res.status(200).send("Query executed successfully");
         } catch (err) {
@@ -69,6 +72,7 @@ class DatabaseController {
             await prisma.logs.create({
                 status: "error",
                 message: err.message,
+                user_id: req.body.id
             })
             res.status(500).send("Error executing query");
         } finally {

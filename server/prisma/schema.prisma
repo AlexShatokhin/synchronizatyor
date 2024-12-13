@@ -9,9 +9,12 @@ datasource db {
 
 model logs {
   id         Int         @id @default(autoincrement())
+  user_id    Int
   status     logs_status
   message    String?     @db.Text
   created_at DateTime?   @default(now()) @db.Timestamp(0)
+
+  user users @relation(fields: [user_id], references: [id])
 }
 
 model tasks {
@@ -34,6 +37,7 @@ model users {
   password   String    @db.VarChar(255)
   created_at DateTime? @default(now()) @db.Timestamp(0)
   tasks      tasks[]
+  logs       logs[]
 }
 
 enum logs_status {
