@@ -1,0 +1,19 @@
+@import "../../../../constants/_colors";
+
+.log-item{
+    width: 900px;
+    height: 60px;
+    background-color: $white;
+    border-radius: 5px;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 1.5fr 2fr 1fr;
+    align-items: center;
+    margin-top: 10px;
+    &:hover{
+        background-color: $grey;
+    }
+    &__text{
+        margin: 0 auto;
+    }
+}

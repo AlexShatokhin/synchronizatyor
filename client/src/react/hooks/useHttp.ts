@@ -10,7 +10,7 @@ const useHttp = () => {
 
 
         try {
-            const response = await fetch(url, {method, headers, body});
+            const response = await fetch(url, {method, headers, body, credentials: "include"});
             if (!response.ok) {
                 throw new Error('Ошибка при загрузке данных');
             }
