@@ -1,0 +1,26 @@
+@import "../../../constants/_colors";
+
+.dropdown-filter{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    margin: 0 10px;
+    select {
+        width: 100%;
+        min-height: 30px;
+        background-color: $white;
+        font-size: 18px;
+        cursor: pointer;
+        border: 2px solid rgba($color: $black, $alpha: 0.1);
+        border-radius: 5px;
+        padding: 5px 10px;
+        color: $black;
+        font-weight: 600;
+        outline: none;
+        transition: all 0.1s;
+    }
+    select:focus{
+        border-color: $blue;
+        border-width: 2px;
+    }
+}

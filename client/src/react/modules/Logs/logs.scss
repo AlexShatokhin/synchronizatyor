@@ -3,4 +3,8 @@
 .logs{
     width: 100%;
     background-color: $lightgrey;
+    padding: 20px;
+    &__title{
+        margin-bottom: 30px;
+    }
 }

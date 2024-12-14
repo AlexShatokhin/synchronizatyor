@@ -15,6 +15,7 @@ class SerializationController {
             await prisma.logs.create({
                 data: {
                     status: 'success',
+                    type: 'json',
                     message: 'JSON file has been saved successfully',
                     user_id: req.body.id,
                 },
@@ -57,6 +58,7 @@ class SerializationController {
                 await prisma.logs.create({
                     data: {
                         status: 'success',
+                        type: 'xml',
                         message: 'XML file has been saved successfully',
                         user_id: req.body.id,
                     },

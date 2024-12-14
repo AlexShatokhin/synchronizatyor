@@ -1,0 +1,9 @@
+.log-filters{
+    display: flex;
+    align-items: flex-end;
+    &__apply{
+        height: 100%;
+        margin: 0;
+        height: 40px;
+    }
+}

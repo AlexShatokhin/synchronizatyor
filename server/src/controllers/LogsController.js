@@ -2,16 +2,29 @@ const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 class LogsController {
-    async getLogs(req, res){
+    getConvertedStatus = (status) => {
+        switch (status) {
+            case 'COMPLETE':
+                return 'success';
+            case 'FAIL':
+                return 'error';
+            default:
+                return 'error';
+        }
+    }
+    getLogs = async (req, res) => {
         const type = req.query.type;
+        const status = req.query.status;
         const id = req.query.id;
-        console.log(id, req.session)
         const where = {
             user_id: +id
         };
 
         if (type !== 'all') {
             where.type = type;
+        }
+        if(status !== 'all'){
+            where.status = this.getConvertedStatus(status);
         }
 
         const logs = await prisma.logs.findMany({where})

@@ -1,6 +1,6 @@
 import { FC } from "react";
-import BadgeStatus from "../../../UI/BadgeStatus/BadgeStatus";
-import { SynchronizationStatusEnum } from "../../../types/SynchronizationStatusEnum";
+import BadgeStatus from "../../../../UI/BadgeStatus/BadgeStatus";
+import { SynchronizationStatusEnum } from "../../../../types/SynchronizationStatusEnum";
 
 import "./log_item.scss";
 

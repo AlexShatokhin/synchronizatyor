@@ -21,6 +21,7 @@ class DatabaseController {
             await FileUtils.writeFile(filePath, JSON.stringify(result));
             await prisma.logs.create({
                 status: "success",
+                type: "mysql",
                 message: "Query executed successfully",
                 user_id: req.body.id
             })
@@ -62,6 +63,7 @@ class DatabaseController {
             await prisma.logs.create({
                 status: "success",
                 message: "Query executed successfully",
+                type: "postgres",
                 user_id: req.body.id
             })
             res.status(200).send("Query executed successfully");

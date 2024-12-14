@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 class AuthrizationController {
     async login(req, res){
-        const { email, name, password } = req.body;
+        const { email, password } = req.body;
         try {
             // Проверка пользователя в базе данных
             const userCheck = await prisma.users.findUnique({
