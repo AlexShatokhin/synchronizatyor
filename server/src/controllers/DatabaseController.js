@@ -4,7 +4,8 @@ const { Client } = require("pg");
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const {sendEmail} = require("../services/EmailService")
+const {sendEmail} = require("../services/EmailService");
+const ModifyingService = require('../services/ModifyingService');
 
 class DatabaseController {
     async handleMySQL(req, res){
@@ -17,28 +18,34 @@ class DatabaseController {
         const ss = connection.promise();
         try {
             const [result] = await ss.query(req.body.query);
-            const filePath = path.join(__dirname, `result.txt`);
-            await FileUtils.writeFile(filePath, JSON.stringify(result));
+            const convertedData = ModifyingService.mapFields(Array.isArray(result) ? result : [result], req.body.mapping.data);
+            const fileName = "result.json";
+            await FileUtils.writeFile(fileName, JSON.stringify(convertedData));
             await prisma.logs.create({
+                data:{
                 status: "success",
                 type: "mysql",
                 message: "Query executed successfully",
                 user_id: req.session.userId
+                }
             })
             if(req.body.email){
-                sendEmail(req.body.email, "Query executed successfully", "The result is attached", filePath);
+                sendEmail(req.body.email, "Query executed successfully", "The result is attached", fileName);
             }
-            res.status(200).send("Query executed successfully");
+            res.status(200).send({message: "Query executed successfully"});
         } catch (err) {
             if(req.body.email){
                 sendEmail(req.body.email, "Error executing query", err.message);
             }
             await prisma.logs.create({
+                data:{
                 status: "error",
                 message: err.message,
+                type: "mysql",
                 user_id: req.session.userId
+                }
             })
-            res.status(500).send("Error executing query");
+            res.status(500).send({message: "Error executing query"});
         } finally {
             connection.end();
         }
@@ -55,28 +62,33 @@ class DatabaseController {
         try {
             await client.connect();
             const result = await client.query(req.body.query);
-            const filePath = path.join(__dirname, `result.txt`);
-            await FileUtils.writeFile(filePath, JSON.stringify(result.rows));
+            const fileName = `result.json`;
+            await FileUtils.writeFile(fileName, JSON.stringify(result.rows));
             if(req.body.email){
-                sendEmail(req.body.email, "Query executed successfully", "The result is attached", filePath);
+                sendEmail(req.body.email, "Query executed successfully", "The result is attached", fileName);
             }
             await prisma.logs.create({
+                data:{
                 status: "success",
                 message: "Query executed successfully",
                 type: "postgres",
                 user_id: req.session.userId
+                }
             })
-            res.status(200).send("Query executed successfully");
+            res.status(200).send({message: "Query executed successfully"});
         } catch (err) {
             if(req.body.email){
                 sendEmail(req.body.email, "Error executing query", err.message);
             }
             await prisma.logs.create({
+                data:{
                 status: "error",
                 message: err.message,
+                type: "postgres",
                 user_id: req.session.userId
+                }
             })
-            res.status(500).send("Error executing query");
+            res.status(500).send({message: "Error executing query"});
         } finally {
             await client.end();
         }

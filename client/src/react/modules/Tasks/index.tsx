@@ -7,12 +7,15 @@ import TaskAccordions from "./components/TaskAccordions/TaskAccordions";
 import useHttp from '../../hooks/useHttp';
 
 const Tasks: React.FC = () => {
-    const platform = useTypedSelector(state => state.tasksSlice.platform);
-    const query = useTypedSelector(state => state.tasksSlice.query);
-    const dbData = useTypedSelector(state => state.tasksSlice.dbData);
-    const mappingType = useTypedSelector(state => state.tasksSlice.mappingType);
-    const mapping = useTypedSelector(state => state.tasksSlice.mapping);
-    const email = useTypedSelector(state => state.userData.email); // Предполагаем, что email хранится в userSlice
+    const {
+        platform,
+        query,
+        dbData,
+        mappingType,
+        mapping,
+        planning: { mode: planningMode, selectedDays, time }
+    } = useTypedSelector(state => state.tasksSlice);
+    const email = useTypedSelector(state => state.userData.email);
 
     const { fetchData } = useHttp();
 
@@ -22,13 +25,44 @@ const Tasks: React.FC = () => {
             user: dbData.user,
             password: dbData.password,
             database: dbData.database,
+            mapping: {
+                type: mappingType,
+                data: mapping
+            },
+            cron: handleGenerateCron(),
             query,
             email,
             data: query
         };
         console.log("Sync Data:", syncData);
-        fetchData(`http://localhost:4000/api/${platform}`, "POST", JSON.stringify(syncData));
-        // Здесь вы можете отправить syncData на сервер или выполнить другие действия
+        fetchData(`http://localhost:4000/api/${platform}`, "POST", JSON.stringify(syncData))
+        .then(res => console.log(res))
+        .catch(err => console.error(err));
+    };
+
+    const generateCronExpression = (days: string[], time: string): string => {
+        const dayMap: { [key: string]: number } = {
+            'Каждый понедельник': 1,
+            'Каждый вторник': 2,
+            'Каждую среду': 3,
+            'Каждый четверг': 4,
+            'Каждую пятницу': 5,
+            'Каждую субботу': 6,
+            'Каждое воскресенье': 0,
+        };
+
+        const [hour, minute] = time.split(':').map(Number);
+        const dayOfWeek = days.map(day => dayMap[day]).join(',');
+
+        return `${minute} ${hour} * * ${dayOfWeek}`;
+    };
+
+    const handleGenerateCron = () => {
+        if (planningMode === 'recurring' && selectedDays.length > 0 && time)
+            return generateCronExpression(selectedDays, time)
+        else 
+            return null;
+
     };
 
     return (

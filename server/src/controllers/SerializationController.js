@@ -1,4 +1,5 @@
 const FileUtils = require('../utils/FileUtils');
+const ModifyingService = require("../services/ModifyingService");
 const parseString = require("xml2js").parseString;
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
@@ -6,12 +7,18 @@ const prisma = new PrismaClient();
 const {sendEmail} = require('../services/EmailService');
 
 class SerializationController {
-    async handleJSON(req, res) {
-        const data = req.body.data;
-        const filename = `jsonResult.txt`;
+    
+    removeNewlines = (text) => {
+        return text.replace(/\n/g, '').replace(/\r/g, '');
+    }
+
+    handleJSON = async (req, res) => {
+        const data = JSON.parse(this.removeNewlines(req.body.data));
+        const convertedData = ModifyingService.mapFields(Array.isArray(data) ? data : [data], req.body.mapping.data);
+        const filename = `jsonResult.json`;
 
         try {
-            await FileUtils.writeFile(filename, data);
+            await FileUtils.writeFile(filename, convertedData);
             await prisma.logs.create({
                 data: {
                     status: 'success',
@@ -40,8 +47,10 @@ class SerializationController {
         }
     }
 
-    async handleXml(req, res) {
-        parseString(req.body.data, async (err, result) => {
+    handleXml = (req, res) => {
+        const data = this.removeNewlines(req.body.data);
+
+        parseString(data, async (err, result) => {
             if (err) {
                 await prisma.logs.create({
                     data: {
@@ -51,12 +60,14 @@ class SerializationController {
                         type: 'xml',
                     },
                 });
-                return res.status(500).send("Error parsing XML");
+                return res.status(500).send({message: "Error parsing XML"});
             }
-            const filename = `xmlResult.txt`;
+            const filename = `xmlResult.json`;
 
             try {
-                await FileUtils.writeFile(filename, result);
+                const convertedData = ModifyingService.mapFields(Array.isArray(result) ? result : [result], req.body.mapping.data);
+                await FileUtils.writeFile(filename, convertedData);
+                console.log(convertedData);
                 await prisma.logs.create({
                     data: {
                         status: 'success',

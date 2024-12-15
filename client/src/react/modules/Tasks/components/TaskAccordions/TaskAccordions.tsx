@@ -1,6 +1,7 @@
 import Accordion from "../../UI/Accordion";
 import Platform from "../Platform/Platform";
 import Mapping from "../Mapping/Mapping";
+import Planning from "../Planning/Planning";
 
 const TaskAccordions = () => {
     return (
@@ -15,7 +16,7 @@ const TaskAccordions = () => {
                 <div>Accordion 3</div>
             </Accordion>
             <Accordion label="Планирование">
-                <div>Accordion 4</div>
+                <Planning />
             </Accordion>
         </div>
     )

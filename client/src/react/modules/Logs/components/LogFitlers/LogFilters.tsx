@@ -7,12 +7,17 @@ import { SynchronizationStatusEnum } from "../../../../types/SynchronizationStat
 import Button from "../../../../UI/Button/Button";
 import { changeFilters, setLogs } from "../../slice/logSlice";
 import useHttp from "../../../../hooks/useHttp";
+import { useEffect } from "react";
 
 const LogFilters = () => {
     const dispatch = useTypedDispatch();
     const {status, type} = useTypedSelector(state => state.logSlice.filters);
     const {id} = useTypedSelector(state => state.userData);
     const {fetchData} = useHttp();
+
+    useEffect(() => {
+        getLogs();
+    }, [])
 
     const getLogs = async () => {
         try{

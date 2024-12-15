@@ -31,7 +31,7 @@ const Platform: React.FC = () => {
                 <DropdownFilter
                     label="Платформа"
                     icon={<FaDatabase />}
-                    defaultValue="json"
+                    defaultValue={platform}
                     options={[
                         { label: "JSON", value: "json" },
                         { label: "XML", value: "xml" },
@@ -42,6 +42,7 @@ const Platform: React.FC = () => {
                 />
 
                 <Textarea
+                    className='platform__query'
                     placeholder="Здесь должны быть ваши данные..."
                     value={query}
                     onChange={handleQueryChange}
@@ -50,22 +51,22 @@ const Platform: React.FC = () => {
                 {(platform === "mysql" || platform === "postgresql") && (
                     <div className="platform__connection">
                         <Input
-                            placeholder="Хост"
+                            placeholder="localhost"
                             value={dbData.host}
                             onChange={(e) => handleDbDataChange("host", e.target.value)}
                         />
                         <Input
-                            placeholder="Пользователь"
+                            placeholder="root"
                             value={dbData.user}
                             onChange={(e) => handleDbDataChange("user", e.target.value)}
                         />
                         <Input
-                            placeholder="Пароль"
+                            placeholder="qwerty"
                             value={dbData.password}
                             onChange={(e) => handleDbDataChange("password", e.target.value)}
                         />
                         <Input
-                            placeholder="База данных"
+                            placeholder="db_name"
                             value={dbData.database}
                             onChange={(e) => handleDbDataChange("database", e.target.value)}
                         />
