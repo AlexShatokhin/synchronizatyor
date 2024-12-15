@@ -4,14 +4,14 @@ import { logout } from "../../slice/userSlice";
 import useHttp from "../../hooks/useHttp";
 
 import { SlLogout } from "react-icons/sl";
-import { IoMdSettings } from "react-icons/io";
 import { LuLogs } from "react-icons/lu";
 import { MdDownload } from "react-icons/md";
 import MenuItem from "./UI/MenuItem/MenuItem";
 
 import "./navigation_menu.scss"
 import { useEffect } from "react";
-import { useLocation, useNavigation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { FaRegClock } from "react-icons/fa";
 
 const NavigationMenu = () => {
     const {fetchData} = useHttp();
@@ -20,12 +20,12 @@ const NavigationMenu = () => {
     const dispatch = useTypedDispatch();
     const location = useLocation();
 
-    const handleChangeActiveElement = (element : "logs" | "home" | "settings") => {
+    const handleChangeActiveElement = (element : "logs" | "home" | "tasks") => {
         dispatch(changeActiveElement(element));
     }
 
     useEffect(() => {
-        handleChangeActiveElement(location.pathname.slice(1) as "logs" | "home" | "settings");
+        handleChangeActiveElement(location.pathname.slice(1) as "logs" | "home" | "tasks");
     }, [])
 
     const handleLogout = () => {
@@ -54,11 +54,11 @@ const NavigationMenu = () => {
                 title="Синхронизация" />
 
             <MenuItem 
-                active = {activeElement === "settings"}
-                onClick={() => handleChangeActiveElement("settings")}
-                path="/settings" 
-                icon={<IoMdSettings />} 
-                title="Настройки" />
+                active = {activeElement === "tasks"}
+                onClick={() => handleChangeActiveElement("tasks")}
+                path="/tasks" 
+                icon={<FaRegClock />} 
+                title="Запланированное" />
 
 
             <MenuItem 

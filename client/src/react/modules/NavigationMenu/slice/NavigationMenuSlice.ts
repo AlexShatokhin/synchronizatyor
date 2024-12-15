@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type initialStateType = {
-    activeElement: "logs" | "home" | "settings";
+    activeElement: "logs" | "home" | "tasks";
 }
 
 const initialState : initialStateType = {
@@ -12,7 +12,7 @@ const NavigationMenuSlice = createSlice({
     name: "NavigationMenu",
     initialState,
     reducers: {
-        changeActiveElement: (state, action : PayloadAction<"logs" | "home" | "settings">) => {
+        changeActiveElement: (state, action : PayloadAction<"logs" | "home" | "tasks">) => {
             state.activeElement = action.payload;
         },
     },
