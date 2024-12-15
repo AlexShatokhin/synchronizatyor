@@ -6,4 +6,11 @@
         margin: 0;
         height: 40px;
     }
+    &__wrapper{
+        display: flex;
+        align-items: center;
+        button{
+            margin-right: 20px;
+        }
+    }
 }

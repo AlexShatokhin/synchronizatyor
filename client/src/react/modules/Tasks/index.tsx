@@ -5,6 +5,9 @@ import { FaPlus } from "react-icons/fa";
 import "./tasks.scss";
 import TaskAccordions from "./components/TaskAccordions/TaskAccordions";
 import useHttp from '../../hooks/useHttp';
+import Spinner from '../../UI/Spinner/Spinner';
+import { colors } from '../../../constants/colors';
+import { SynchronizationStatusEnum } from '../../types/SynchronizationStatusEnum';
 
 const Tasks: React.FC = () => {
     const {
@@ -16,10 +19,12 @@ const Tasks: React.FC = () => {
         planning: { mode: planningMode, selectedDays, time }
     } = useTypedSelector(state => state.tasksSlice);
     const email = useTypedSelector(state => state.userData.email);
+    const [fetchStatus, setFetchStatus] = React.useState<SynchronizationStatusEnum>(SynchronizationStatusEnum.PENDING);
 
-    const { fetchData } = useHttp();
+    const { fetchData, loading } = useHttp();
 
     const handleSyncClick = () => {
+        setFetchStatus(SynchronizationStatusEnum.PENDING);
         const syncData = {
             host: dbData.host,
             user: dbData.user,
@@ -39,8 +44,8 @@ const Tasks: React.FC = () => {
         console.log("Sync Data:", syncData);
 
         fetchData(`http://localhost:4000/api/schedule`, "POST", JSON.stringify(syncData))
-        .then(res => console.log(res))
-        .catch(err => console.error(err));      
+        .then(() => setFetchStatus(SynchronizationStatusEnum.COMPLETE))
+        .catch(() => setFetchStatus(SynchronizationStatusEnum.FAIL));      
 
     };
 
@@ -73,12 +78,18 @@ const Tasks: React.FC = () => {
         <section className="tasks page-module">
             <h1 className="page-title tasks__title">Синхронизация</h1>
             <TaskAccordions />
-            <Button title={
-                <div className="button-add">
-                    <FaPlus />
-                    <span>Синхронизировать</span>
-                </div>
-            } onClick={handleSyncClick} />        
+            <div className="tasks__wrapper">
+                <Button title={
+                    <div className="button-add">
+                        <FaPlus />
+                        <span>Синхронизировать</span>
+                    </div>
+                } onClick={handleSyncClick} /> 
+                {SynchronizationStatusEnum.PENDING && loading && <Spinner color={colors.blue}/>}
+                {fetchStatus === SynchronizationStatusEnum.COMPLETE && <p style={{color: colors.green}}>Синхронизация завершена!</p>}
+                {fetchStatus === SynchronizationStatusEnum.FAIL && <p style={{color: colors.red}}>Синхронизация завершилась с ошибкой!</p>}
+            </div>
+       
         </section>
     );
 };

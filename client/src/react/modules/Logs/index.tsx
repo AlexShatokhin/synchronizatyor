@@ -9,15 +9,17 @@ import LogFilters from "./components/LogFitlers/LogFilters";
 const Logs = () => {
     const logs = useTypedSelector(state => state.logSlice.logs);
 
-    const getEnumByStatus = (status: "success" | "error") => {
-        return status === "success" ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.FAIL;
-    }
-
+    const getEnumByStatus = (status: "success" | "error") => 
+        status === "success" ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.FAIL;
+    
     const renderLogs = () => {
-        console.log(logs);
-        return logs.map((log, index) => {
-            return <LogItem key={index} time={log.created_at} message={log.message} type={getEnumByStatus(log.status)} />
-        })
+        return logs.map((log, index) => 
+            <LogItem 
+                key={index} 
+                time={log.created_at} 
+                message={log.message} 
+                type={getEnumByStatus(log.status)} />
+        )
     }
 
 

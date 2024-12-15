@@ -8,12 +8,14 @@ import Button from "../../../../UI/Button/Button";
 import { changeFilters, setLogs } from "../../slice/logSlice";
 import useHttp from "../../../../hooks/useHttp";
 import { useEffect } from "react";
+import Spinner from "../../../../UI/Spinner/Spinner";
+import { colors } from "../../../../../constants/colors";
 
 const LogFilters = () => {
     const dispatch = useTypedDispatch();
     const {status, type} = useTypedSelector(state => state.logSlice.filters);
     const {id} = useTypedSelector(state => state.userData);
-    const {fetchData} = useHttp();
+    const {fetchData, loading} = useHttp();
 
     useEffect(() => {
         getLogs();
@@ -44,10 +46,14 @@ const LogFilters = () => {
                 options={[{label: "Все", value: "all"}, {label: "Выполнено", value: SynchronizationStatusEnum.COMPLETE}, {label: "Отклонено", value: SynchronizationStatusEnum.FAIL}]}
                 onChange={(value) => dispatch(changeFilters({key: "status", value: value}))}/>    
 
-            <Button
-                className="log-filters__apply"
-                title="Фильтр"
-                onClick={getLogs}/>        
+            <div className="log-filters__wrapper">
+                <Button
+                    className="log-filters__apply"
+                    title="Фильтр"
+                    onClick={getLogs}/> 
+                {loading && <Spinner color={colors.blue}/>}
+            </div>
+       
         </div>
     )
 }
