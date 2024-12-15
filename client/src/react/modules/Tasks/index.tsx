@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useTypedSelector } from '../../hooks/useRedux';
 import Button from "../../UI/Button/Button";
 import { FaPlus } from "react-icons/fa";

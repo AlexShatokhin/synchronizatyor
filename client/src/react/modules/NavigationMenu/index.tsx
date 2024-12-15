@@ -10,16 +10,23 @@ import { MdDownload } from "react-icons/md";
 import MenuItem from "./UI/MenuItem/MenuItem";
 
 import "./navigation_menu.scss"
+import { useEffect } from "react";
+import { useLocation, useNavigation, useParams } from "react-router-dom";
 
 const NavigationMenu = () => {
     const {fetchData} = useHttp();
     const activeElement = useTypedSelector(state => state.NavigationMenu.activeElement);
     const {email, name} = useTypedSelector(state => state.userData);
     const dispatch = useTypedDispatch();
+    const location = useLocation();
 
     const handleChangeActiveElement = (element : "logs" | "home" | "settings") => {
         dispatch(changeActiveElement(element));
     }
+
+    useEffect(() => {
+        handleChangeActiveElement(location.pathname.slice(1) as "logs" | "home" | "settings");
+    }, [])
 
     const handleLogout = () => {
         dispatch(logout());
