@@ -1,1 +1,1 @@
-"[{\"id\":1,\"name\":\"Иванов Иван\",\"email\":\"test@test\",\"password\":\"$2a$10$lQ7h2GmKPkePidbzPXqpfe4o673/QXz1oux/2Y2h73QIUo4ZD0Gea\",\"created_at\":{}}]"
+"[{\"id\":1,\"fullName\":\"Иванов Иван\",\"login\":\"test@test\",\"password\":\"$2a$10$lQ7h2GmKPkePidbzPXqpfe4o673/QXz1oux/2Y2h73QIUo4ZD0Gea\",\"created_at\":{}}]"

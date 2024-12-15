@@ -3,12 +3,15 @@
 .mapping{
     display: flex;
     justify-content: space-between;
-    label{
-        margin-left: 10px;
-        font-weight: 600;
-        color: $black;
-        font-size: 18px;
+    &__item{
+        label{
+            margin-left: 10px;
+            font-weight: 600;
+            color: $black;
+            font-size: 18px;
+        }
     }
+
     &-form{
         &__item{
             margin-bottom: 10px;
@@ -16,8 +19,9 @@
         }
     }
     &__content{
+        width: 800px;
         &-item{
-            width: 500px;
+            width: 600px;
             display: flex;
             justify-content: space-between;
             margin-bottom: 10px;

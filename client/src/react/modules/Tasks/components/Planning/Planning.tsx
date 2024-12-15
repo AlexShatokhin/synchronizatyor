@@ -39,51 +39,48 @@ const Planning: React.FC = () => {
     return (
         <div className="planning">
             <div className="planning__mode">
-                <label>
+                <div className="planning__item">
                     <input
                         type="radio"
                         name="planningMode"
                         value="single"
+                        id='single'
                         checked={planningMode === 'single'}
-                        onChange={() => handleModeChange('single')}
-                    />
-                    Единовременно
-                </label>
-                <label>
+                        onChange={() => handleModeChange('single')}/>
+                    <label htmlFor='single'>Единовременно</label>
+                </div>
+                <div className="planning__item">
                     <input
                         type="radio"
                         name="planningMode"
+                        id='recurring'
                         value="recurring"
                         checked={planningMode === 'recurring'}
-                        onChange={() => handleModeChange('recurring')}
-                    />
-                    Многократно
-                </label>
+                        onChange={() => handleModeChange('recurring')}/>
+                    <label htmlFor='recurring'>Многократно</label>
+                </div>
             </div>
 
             {planningMode === 'recurring' && (
                 <div className="planning__recurring">
                     <div className="planning__days">
                         {daysOfWeek.map(day => (
-                            <label key={day}>
+                            <div key={day} className="planning__days-item">
                                 <input
+                                    id={day}
                                     type="checkbox"
                                     checked={selectedDays.includes(day)}
-                                    onChange={() => handleDayChange(day)}
-                                />
-                                {day}
-                            </label>
+                                    onChange={() => handleDayChange(day)}/>
+                                <label htmlFor={day}>{day}</label>
+                            </div>
                         ))}
                     </div>
                     <div className="planning__time">
-                        <label>
-                            Время:
-                            <Input
-                                type="time"
-                                value={time}
-                                onChange={handleTimeChange}
-                            />
-                        </label>
+                        <label>Время:</label>
+                        <Input
+                            type="time"
+                            value={time}
+                            onChange={handleTimeChange}/>
                     </div>
                 </div>
             )}
