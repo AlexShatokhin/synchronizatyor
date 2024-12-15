@@ -23,7 +23,6 @@ const NavigationMenu = () => {
 
     const handleLogout = () => {
         dispatch(logout());
-        window.location.reload();
         fetchData("http://localhost:4000/api/logout", "POST");
     }
 

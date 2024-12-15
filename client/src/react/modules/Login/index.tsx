@@ -9,6 +9,7 @@ import "./login.scss"
 import Button from "../../UI/Button/Button";
 import useHttp from "../../hooks/useHttp";
 import { login } from "../../slice/userSlice";
+import { changeActiveElement } from "../NavigationMenu/slice/NavigationMenuSlice";
 
 
 const Login : FC = () => {
@@ -51,8 +52,8 @@ const Login : FC = () => {
         .then((res) => {
             setError("");
             dispatch(login(res.user));
-            navigate("/logs");
-            console.log("Успешная авторизация")
+            navigate("/home");
+            dispatch(changeActiveElement("home"));
         })
         .catch(() => setError("Неверный логин или пароль"))
     }

@@ -34,13 +34,13 @@ const LogFilters = () => {
             <DropdownFilter
                 label = "Тип данных"
                 icon={<FaDatabase />}
-                defaultValue={"all"} 
-                options={[{label: "Все", value: "all"}, {label: "JSON", value: "JSON"}, {label: "XML", value: "XML"}]}
+                value={type} 
+                options={[{label: "Все", value: "all"}, {label: "JSON", value: "JSON"}, {label: "XML", value: "XML"}, {label: "MySQL", value: "mysql"}, {label: "PostgreSQL", value: "postgresql"}]}
                 onChange={(value) => dispatch(changeFilters({key: "type", value: value}))}/>
 
             <DropdownFilter
                 label = "Статус"
-                defaultValue={"all"} 
+                value={status} 
                 options={[{label: "Все", value: "all"}, {label: "Выполнено", value: SynchronizationStatusEnum.COMPLETE}, {label: "Отклонено", value: SynchronizationStatusEnum.FAIL}]}
                 onChange={(value) => dispatch(changeFilters({key: "status", value: value}))}/>    
 

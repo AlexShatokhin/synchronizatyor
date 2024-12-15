@@ -31,7 +31,7 @@ const Platform: React.FC = () => {
                 <DropdownFilter
                     label="Платформа"
                     icon={<FaDatabase />}
-                    defaultValue={platform}
+                    value={platform}
                     options={[
                         { label: "JSON", value: "json" },
                         { label: "XML", value: "xml" },

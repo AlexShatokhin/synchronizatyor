@@ -41,7 +41,7 @@ const Mapping: React.FC = () => {
                         />
                         Переименование
                     </label>
-                    <label>
+                    {/* <label>
                         <input
                             type="radio"
                             name="mappingType"
@@ -50,7 +50,7 @@ const Mapping: React.FC = () => {
                             onChange={() => handleMappingTypeChange("modification")}
                         />
                         Модификация
-                    </label>
+                    </label> */}
                 </div>
             </div>
             <div className="mapping__content">

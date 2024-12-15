@@ -29,15 +29,19 @@ const Tasks: React.FC = () => {
                 type: mappingType,
                 data: mapping
             },
-            cron: handleGenerateCron(),
             query,
             email,
-            data: query
+            data: query,
+            sourceType: platform, 
+            cronExpression : handleGenerateCron(), 
+            isSingular: planningMode === "single"
         };
         console.log("Sync Data:", syncData);
-        fetchData(`http://localhost:4000/api/${platform}`, "POST", JSON.stringify(syncData))
+
+        fetchData(`http://localhost:4000/api/schedule`, "POST", JSON.stringify(syncData))
         .then(res => console.log(res))
-        .catch(err => console.error(err));
+        .catch(err => console.error(err));      
+
     };
 
     const generateCronExpression = (days: string[], time: string): string => {
@@ -68,14 +72,13 @@ const Tasks: React.FC = () => {
     return (
         <section className="tasks page-module">
             <h1 className="page-title tasks__title">Синхронизация</h1>
+            <TaskAccordions />
             <Button title={
                 <div className="button-add">
                     <FaPlus />
                     <span>Синхронизировать</span>
                 </div>
-            } onClick={handleSyncClick} />
-            <TaskAccordions />
-            <Button title={"Синхронизировать"} onClick={handleSyncClick} />
+            } onClick={handleSyncClick} />        
         </section>
     );
 };

@@ -12,9 +12,6 @@ const TaskAccordions = () => {
             <Accordion label="Маппинг">
                 <Mapping />
             </Accordion>
-            <Accordion label="Фильтрация">
-                <div>Accordion 3</div>
-            </Accordion>
             <Accordion label="Планирование">
                 <Planning />
             </Accordion>

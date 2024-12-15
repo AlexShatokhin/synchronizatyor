@@ -71,7 +71,6 @@ class SerializationController {
                 await prisma.logs.create({
                     data: {
                         status: 'success',
-                        type: 'xml',
                         message: 'XML file has been saved successfully',
                         user_id: req.session.userId,
                         type: 'xml',
