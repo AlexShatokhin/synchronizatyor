@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import NavigationMenu from "../modules/NavigationMenu/slice/NavigationMenuSlice"
 import userData from "../slice/userSlice"
 import logSlice from "../modules/Logs/slice/logSlice"
+import tasksSlice from "../modules/Tasks/slice/tasksSlice"
 
 const store = configureStore({
     reducer: {
       NavigationMenu,
       userData,
-      logSlice
+      logSlice,
+      tasksSlice
     },
 });
 

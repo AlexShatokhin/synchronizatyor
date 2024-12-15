@@ -1,0 +1,35 @@
+@import "../../../../../constants/_colors";
+
+.mapping{
+    display: flex;
+    justify-content: space-between;
+    label{
+        margin-left: 10px;
+        font-weight: 600;
+        color: $black;
+        font-size: 18px;
+    }
+    &-form{
+        &__item{
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+    }
+    &__content{
+        &-item{
+            width: 500px;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        &-button{
+            display: block;
+            margin: 0 auto;
+            margin-top: 10px;
+        }
+    }
+    &__buttons{
+        display: flex;
+        justify-content: space-evenly;
+    }
+}

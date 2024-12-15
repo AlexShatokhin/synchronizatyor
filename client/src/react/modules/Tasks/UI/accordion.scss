@@ -1,0 +1,37 @@
+@import "../../../../constants/_colors";
+.accordion{
+    width: 100%;
+    min-height: 10px;
+    margin: 0;
+    border: 2px solid rgba($color: $grey, $alpha: 0.2);
+    border-radius: 5px; 
+    margin-bottom: 20px;
+    &__header{
+        width: 100%;
+        font-size: 19px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 60px;
+        padding: 20px;  
+        background-color: $lightgrey;
+        font-weight: 600;
+        button{
+            cursor: pointer;
+            background-color: transparent;
+            border: none;
+        }
+    }
+    &__content{
+        min-height: 0;
+        background-color: $white;
+    }
+
+    &-disabled{
+        opacity: 0.7;
+    }
+    .show{
+        padding: 20px;
+        min-height: 20px;
+    }
+}

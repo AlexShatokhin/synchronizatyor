@@ -9,15 +9,19 @@ type InputPropsType = {
     placeholder?: string,
     type?: string,
     value?: string,
+    name?: string,
+    id?: string,
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-const Input : FC<InputPropsType> = ({className, value, placeholder, type, onChange}) => {
+const Input : FC<InputPropsType> = ({className, value, placeholder, type, onChange, name, id}) => {
     const [showPassword, toggleShowPassword] = useToggle(false);
 
     return (
         <div className={`input-wrapper ${className}`}>
             <input
+                name={name}
+                id = {id}
                 type={type === "password" && showPassword ? "text" : type || "text"}
                 className={`input`}
                 value={value}

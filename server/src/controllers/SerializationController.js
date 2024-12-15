@@ -17,7 +17,7 @@ class SerializationController {
                     status: 'success',
                     type: 'json',
                     message: 'JSON file has been saved successfully',
-                    user_id: req.body.id,
+                    user_id: req.session.userId,
                 },
             });
             if(req.body.email){
@@ -29,7 +29,8 @@ class SerializationController {
                 data: {
                     status: 'error',
                     message: `Error saving JSON file: ${error.message}`,
-                    user_id: req.body.id,
+                    user_id: req.session.userId,
+                    type: 'json',
                 },
             });
             if(req.body.email){
@@ -46,7 +47,8 @@ class SerializationController {
                     data: {
                         status: 'error',
                         message: `Error parsing XML: ${err.message}`,
-                        user_id: req.body.id,
+                        user_id: req.session.userId,
+                        type: 'xml',
                     },
                 });
                 return res.status(500).send("Error parsing XML");
@@ -60,7 +62,8 @@ class SerializationController {
                         status: 'success',
                         type: 'xml',
                         message: 'XML file has been saved successfully',
-                        user_id: req.body.id,
+                        user_id: req.session.userId,
+                        type: 'xml',
                     },
                 });
                 if(req.body.email){
@@ -72,7 +75,8 @@ class SerializationController {
                     data: {
                         status: 'error',
                         message: `Error saving XML file: ${error.message}`,
-                        user_id: req.body.id,
+                        user_id: req.session.userId,
+                        type: 'xml',
                     },
                 });
                 if(req.body.email){

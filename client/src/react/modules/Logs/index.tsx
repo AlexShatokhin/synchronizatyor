@@ -22,8 +22,8 @@ const Logs = () => {
 
 
     return (
-        <div className="logs">
-            <h1 className="logs__title">Логирование</h1>
+        <div className="logs page-module">
+            <h1 className="page-title logs__title ">Логирование</h1>
             <LogFilters />
             {renderLogs()}
         </div>

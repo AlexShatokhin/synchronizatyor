@@ -1,10 +1,11 @@
 @import "../../../constants/_colors";
 
-.logs{
+.page-module{
     width: 100%;
     background-color: $lightgrey;
     padding: 20px;
-    &__title{
-        margin-bottom: 30px;
+    .page-title{
+        margin-bottom: 40px;
+        font-size: 35px;
     }
 }

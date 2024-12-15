@@ -1,0 +1,13 @@
+.tasks{
+    .button-add{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        span{
+            margin-left: 10px;
+        }
+    }
+    &__content{
+        margin-top: 20px;
+    }
+}
