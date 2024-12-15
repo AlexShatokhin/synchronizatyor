@@ -17,8 +17,9 @@ const Logs = () => {
             <LogItem 
                 key={index} 
                 time={log.created_at} 
-                message={log.message} 
-                type={getEnumByStatus(log.status)} />
+                message={log.message}
+                type = {log.type}
+                status={getEnumByStatus(log.status)} />
         )
     }
 
