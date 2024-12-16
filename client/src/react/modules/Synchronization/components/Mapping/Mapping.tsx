@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTypedDispatch, useTypedSelector } from "../../../../hooks/useRedux";
-import { setMappingType, setMapping } from "../../slice/tasksSlice";
+import { setMappingType, setMapping } from "../../slice/synchronizationSlice";
 import Input from "../../../../UI/Input/Input";
 import Button from "../../../../UI/Button/Button";
 import "./mapping.scss";
 
 const Mapping: React.FC = () => {
     const dispatch = useTypedDispatch();
-    const mappingType = useTypedSelector(state => state.tasksSlice.mappingType);
-    const mapping = useTypedSelector(state => state.tasksSlice.mapping);
+    const mappingType = useTypedSelector(state => state.synchronizationSlice.mappingType);
+    const mapping = useTypedSelector(state => state.synchronizationSlice.mapping);
 
     const handleMappingTypeChange = (value: string) => {
         dispatch(setMappingType(value));

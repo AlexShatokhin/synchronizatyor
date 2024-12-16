@@ -2,7 +2,7 @@ import {FC, useState} from 'react';
 import { useTypedSelector } from '../../hooks/useRedux';
 import Button from "../../UI/Button/Button";
 import { FaPlus } from "react-icons/fa";
-import "./tasks.scss";
+import "./synchronization.scss";
 import TaskAccordions from "./components/TaskAccordions/TaskAccordions";
 import useHttp from '../../hooks/useHttp';
 import Spinner from '../../UI/Spinner/Spinner';
@@ -17,7 +17,7 @@ const Synchronization: FC = () => {
         mappingType,
         mapping,
         planning: { mode: planningMode, selectedDays, time }
-    } = useTypedSelector(state => state.tasksSlice);
+    } = useTypedSelector(state => state.synchronizationSlice);
     const email = useTypedSelector(state => state.userData.email);
     const [fetchStatus, setFetchStatus] = useState<SynchronizationStatusEnum>(SynchronizationStatusEnum.PENDING);
 
@@ -75,10 +75,10 @@ const Synchronization: FC = () => {
     };
 
     return (
-        <section className="tasks page-module">
-            <h1 className="page-title tasks__title">Синхронизация</h1>
+        <section className="synchronization page-module">
+            <h1 className="page-title synchronization__title">Синхронизация</h1>
             <TaskAccordions />
-            <div className="tasks__wrapper">
+            <div className="synchronization__wrapper">
                 <Button title={
                     <div className="button-add">
                         <FaPlus />

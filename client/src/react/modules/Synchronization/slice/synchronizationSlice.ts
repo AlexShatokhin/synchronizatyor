@@ -18,7 +18,7 @@ type PlanningType = {
     time: string;
 }
 
-type TasksStateType = {
+type SynchronizationStateType = {
     platform: string;
     query: string;
     dbData: DbDataType;
@@ -27,7 +27,7 @@ type TasksStateType = {
     planning: PlanningType;
 }
 
-const initialState: TasksStateType = {
+const initialState: SynchronizationStateType = {
     platform: "json",
     query: "",
     dbData: {
@@ -50,8 +50,8 @@ const initialState: TasksStateType = {
     }
 };
 
-const tasksSlice = createSlice({
-    name: "tasksSlice",
+const synchronizationSlice = createSlice({
+    name: "synchronizationSlice",
     initialState,
     reducers: {
         setPlatform(state, action) {
@@ -81,7 +81,7 @@ const tasksSlice = createSlice({
     },
 })
 
-const {reducer, actions} = tasksSlice
+const {reducer, actions} = synchronizationSlice
 
 export default reducer;
 export const { 

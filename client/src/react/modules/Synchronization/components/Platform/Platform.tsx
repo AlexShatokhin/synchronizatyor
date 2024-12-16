@@ -4,14 +4,14 @@ import { FaDatabase } from "react-icons/fa6";
 import DropdownFilter from "../../../../components/DropdownFilter/DropdownFilter";
 import Input from "../../../../UI/Input/Input";
 import Textarea from "../../../../UI/Input/Textarea";
-import { setPlatform, setDbData, setQuery } from "../../slice/tasksSlice";
+import { setPlatform, setDbData, setQuery } from "../../slice/synchronizationSlice";
 import "./platform.scss";
 
 const Platform: React.FC = () => {
     const dispatch = useTypedDispatch();
-    const platform = useTypedSelector(state => state.tasksSlice.platform);
-    const dbData = useTypedSelector(state => state.tasksSlice.dbData);
-    const query = useTypedSelector(state => state.tasksSlice.query);
+    const platform = useTypedSelector(state => state.synchronizationSlice.platform);
+    const dbData = useTypedSelector(state => state.synchronizationSlice.dbData);
+    const query = useTypedSelector(state => state.synchronizationSlice.query);
 
     const handlePlatformChange = (value: string) => {
         dispatch(setPlatform(value));

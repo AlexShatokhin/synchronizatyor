@@ -1,14 +1,14 @@
 import React from 'react';
 import { useTypedDispatch, useTypedSelector } from "../../../../hooks/useRedux";
-import { setPlanningDays, setPlanningMode, setPlanningTime } from '../../slice/tasksSlice';
+import { setPlanningDays, setPlanningMode, setPlanningTime } from '../../slice/synchronizationSlice';
 import Input from "../../../../UI/Input/Input";
 import "./planning.scss";
 
 const Planning: React.FC = () => {
     const dispatch = useTypedDispatch();
-    const planningMode = useTypedSelector(state => state.tasksSlice.planning.mode);
-    const selectedDays = useTypedSelector(state => state.tasksSlice.planning.selectedDays);
-    const time = useTypedSelector(state => state.tasksSlice.planning.time);
+    const planningMode = useTypedSelector(state => state.synchronizationSlice.planning.mode);
+    const selectedDays = useTypedSelector(state => state.synchronizationSlice.planning.selectedDays);
+    const time = useTypedSelector(state => state.synchronizationSlice.planning.time);
 
     const handleModeChange = (mode: 'single' | 'recurring') => {
         dispatch(setPlanningMode(mode));
