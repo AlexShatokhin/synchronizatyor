@@ -1,7 +1,8 @@
 import { FC } from "react";
 import BadgeStatus from "../../../../UI/BadgeStatus/BadgeStatus";
 import { SynchronizationStatusEnum } from "../../../../types/SynchronizationStatusEnum";
-
+import { formatDate } from "../../../../utils/formatDate";
+import { formatType } from "../../../../utils/formatType";
 import "./log_item.scss";
 
 type LogItemPropsType = {
@@ -11,23 +12,6 @@ type LogItemPropsType = {
     status: SynchronizationStatusEnum.COMPLETE | SynchronizationStatusEnum.FAIL;
 }
 
-const formatDate = (date: string) => {
-    const dateObj = new Date(date);
-    return `${getZero(dateObj.getDate())}.${getZero(dateObj.getMonth())}.${dateObj.getFullYear()} ${getZero(dateObj.getHours())}:${getZero(dateObj.getMinutes())}:${getZero(dateObj.getSeconds())}`
-}
-
-const formatType = (type : string) => {
-    switch(type){
-        case "mysql":
-            return "MySQL";
-        case "postgresql":
-            return "PostgreSQL";
-        default:
-            return type.toUpperCase();
-    }
-}
-
-const getZero = (num: number) => num < 9 ? `0${num}` : num;
 
 const LogItem : FC<LogItemPropsType> = ({time, message, status, type}) => {
     return (

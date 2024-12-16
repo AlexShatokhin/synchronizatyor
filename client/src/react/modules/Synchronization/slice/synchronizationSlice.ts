@@ -14,6 +14,7 @@ type MappingFieldType = {
 
 type PlanningType = {
     mode: 'single' | 'recurring';
+    name: string;
     selectedDays: string[];
     time: string;
 }
@@ -45,6 +46,7 @@ const initialState: SynchronizationStateType = {
     ],
     planning: {
         mode: "single",
+        name: "",
         selectedDays: [],
         time: ""
     }
@@ -77,6 +79,9 @@ const synchronizationSlice = createSlice({
         },
         setPlanningTime(state, action) {
             state.planning.time = action.payload
+        },
+        setPlanningName(state, action) {
+            state.planning.name = action.payload;
         }
     },
 })
@@ -92,5 +97,6 @@ export const {
     setMapping, 
     setPlanningDays, 
     setPlanningMode, 
-    setPlanningTime 
+    setPlanningTime ,
+    setPlanningName
 } = actions;

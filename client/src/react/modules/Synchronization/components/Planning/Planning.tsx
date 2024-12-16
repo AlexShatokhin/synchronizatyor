@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTypedDispatch, useTypedSelector } from "../../../../hooks/useRedux";
-import { setPlanningDays, setPlanningMode, setPlanningTime } from '../../slice/synchronizationSlice';
+import { setPlanningDays, setPlanningMode, setPlanningName, setPlanningTime } from "../../slice/synchronizationSlice";
 import Input from "../../../../UI/Input/Input";
 import "./planning.scss";
 
@@ -9,6 +9,7 @@ const Planning: React.FC = () => {
     const planningMode = useTypedSelector(state => state.synchronizationSlice.planning.mode);
     const selectedDays = useTypedSelector(state => state.synchronizationSlice.planning.selectedDays);
     const time = useTypedSelector(state => state.synchronizationSlice.planning.time);
+    const name = useTypedSelector(state => state.synchronizationSlice.planning.name);
 
     const handleModeChange = (mode: 'single' | 'recurring') => {
         dispatch(setPlanningMode(mode));
@@ -25,6 +26,10 @@ const Planning: React.FC = () => {
     const handleTimeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         dispatch(setPlanningTime(e.target.value));
     };
+
+    const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        dispatch(setPlanningName(e.target.value));
+    }
 
     const daysOfWeek = [
         'Каждый понедельник',
@@ -59,6 +64,12 @@ const Planning: React.FC = () => {
                         onChange={() => handleModeChange('recurring')}/>
                     <label htmlFor='recurring'>Многократно</label>
                 </div>
+                {planningMode === 'recurring' && 
+                <Input 
+                    value={name}
+                    placeholder='Название задачи' 
+                    className='planning__name'
+                    onChange={handleNameChange}/>}
             </div>
 
             {planningMode === 'recurring' && (

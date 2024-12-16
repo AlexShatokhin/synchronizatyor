@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useTypedSelector } from "../../hooks/useRedux";
 import LogItem from "./components/LogItem/LogItem";
 

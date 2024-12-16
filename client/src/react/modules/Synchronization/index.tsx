@@ -16,7 +16,7 @@ const Synchronization: FC = () => {
         dbData,
         mappingType,
         mapping,
-        planning: { mode: planningMode, selectedDays, time }
+        planning: { mode: planningMode, selectedDays, time, name }
     } = useTypedSelector(state => state.synchronizationSlice);
     const email = useTypedSelector(state => state.userData.email);
     const [fetchStatus, setFetchStatus] = useState<SynchronizationStatusEnum>(SynchronizationStatusEnum.PENDING);
@@ -36,6 +36,7 @@ const Synchronization: FC = () => {
             },
             query,
             email,
+            name,
             data: query,
             sourceType: platform, 
             cronExpression : handleGenerateCron(), 
