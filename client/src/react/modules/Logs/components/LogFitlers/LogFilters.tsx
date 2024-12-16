@@ -10,6 +10,7 @@ import useHttp from "../../../../hooks/useHttp";
 import { useEffect } from "react";
 import Spinner from "../../../../UI/Spinner/Spinner";
 import { colors } from "../../../../../constants/colors";
+import { HOST, PORT } from "../../../../../constants/port";
 
 const LogFilters = () => {
     const dispatch = useTypedDispatch();
@@ -23,7 +24,7 @@ const LogFilters = () => {
 
     const getLogs = async () => {
         try{
-            const filteredLogs = await fetchData(`http://localhost:4000/api/logs?status=${status}&type=${type}&id=${id}`);
+            const filteredLogs = await fetchData(`http://${HOST}:${PORT}/api/logs?status=${status}&type=${type}&id=${id}`);
             dispatch(setLogs(filteredLogs.logs));
 
         } catch(e){

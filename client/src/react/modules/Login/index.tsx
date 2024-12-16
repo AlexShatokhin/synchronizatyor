@@ -10,6 +10,7 @@ import Button from "../../UI/Button/Button";
 import useHttp from "../../hooks/useHttp";
 import { login } from "../../slice/userSlice";
 import { changeActiveElement } from "../NavigationMenu/slice/NavigationMenuSlice";
+import { HOST, PORT } from "../../../constants/port";
 
 
 const Login : FC = () => {
@@ -48,7 +49,7 @@ const Login : FC = () => {
             email, 
             password
         }
-        fetchData("http://localhost:4000/api/login", "POST", JSON.stringify(data))
+        fetchData(`http://${HOST}:${PORT}/api/login`, "POST", JSON.stringify(data))
         .then((res) => {
             setError("");
             dispatch(login(res.user));

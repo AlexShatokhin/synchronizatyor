@@ -12,6 +12,7 @@ import "./navigation_menu.scss"
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { FaRegClock } from "react-icons/fa";
+import { HOST, PORT } from "../../../constants/port";
 
 const NavigationMenu = () => {
     const {fetchData} = useHttp();
@@ -30,7 +31,7 @@ const NavigationMenu = () => {
 
     const handleLogout = () => {
         dispatch(logout());
-        fetchData("http://localhost:4000/api/logout", "POST");
+        fetchData(`http://${HOST}:${PORT}/api/logout`, "POST");
     }
 
     return (

@@ -10,7 +10,7 @@ const ModifyingService = require('../services/ModifyingService');
 class DatabaseController {
 
     async getMySQL(req, res){
-        const filePath = __dirname + "utilsMySQLResult.json";
+        const filePath = FileUtils.getPath("MySQLResult.json");
         res.status(200).sendFile(filePath, (err) => {
             if (err) {
                 console.error('Ошибка при отправке файла:', err);
@@ -63,7 +63,7 @@ class DatabaseController {
     }
 
     async getPostgres(req, res){
-        const filePath = path.join(__dirname, "../", "utilsPostgresResult.json");
+        const filePath = FileUtils.getPath("PostgresResult.json");
         res.status(200).sendFile(filePath, (err) => {
             if (err) {
                 console.error('Ошибка при отправке файла:', err);

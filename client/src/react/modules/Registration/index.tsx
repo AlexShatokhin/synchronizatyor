@@ -13,6 +13,7 @@ import Title from "../../UI/Title/Title";
 import "./registration.scss";
 import { colors } from "../../../constants/colors";
 import Spinner from "../../UI/Spinner/Spinner";
+import { HOST, PORT } from "../../../constants/port";
 
 const Registration : FC = () => {
     const [name, setName] = useState<string>("");
@@ -54,7 +55,7 @@ const Registration : FC = () => {
             name,
             password
         }
-        fetchData("http://localhost:4000/api/register", "POST", JSON.stringify(data))
+        fetchData(`http://${HOST}:${PORT}/api/register`, "POST", JSON.stringify(data))
         .then(() => {
             setRegistrationStatus("complete");
         })

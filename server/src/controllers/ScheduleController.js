@@ -15,7 +15,6 @@ class ScheduleController {
 
     removeSchedule = async (req, res) => {
         const { taskID } = req.body;
-        console.log(this.scheduledTasks);
 
         if (this.scheduledTasks[req.session.userId]) {
             const task = this.scheduledTasks[req.session.userId].find(task => task.taskID === taskID);
@@ -36,7 +35,6 @@ class ScheduleController {
     }
     setSchedule = async (req, res) => {
         const { sourceType, cronExpression, isSingular, name, ...args } = req.body;
-        console.log(sourceType, cronExpression, isSingular, args);
         // Проверка валидности cron-выражения
         if (cronExpression && !cron.validate(cronExpression)) {
             return res.status(400).json({ message: 'Invalid cron expression' });
@@ -70,7 +68,6 @@ class ScheduleController {
             this.scheduledTasks[req.session.userId].push({
                 taskID,
                 cron: cron.schedule(cronExpression, async () => {
-                    console.log(`Executing task for ${sourceType}`);
                     try {
                         await controllerMethod(req, res);
                     } catch (error) {

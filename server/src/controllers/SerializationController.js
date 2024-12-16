@@ -14,7 +14,7 @@ class SerializationController {
     }
 
     getJSON = async (req, res) => {
-        const filePath = path.join(__dirname, "../", "utilsjsonResult.json");
+        const filePath = FileUtils.getPath("JSONResult.json");
         res.status(200).sendFile(filePath, (err) => {
             if (err) {
                 console.error('Ошибка при отправке файла:', err);
@@ -59,7 +59,7 @@ class SerializationController {
     }
 
     getXML = async (req, res) => {
-        const filePath = path.join(__dirname, "../", "utilsxmlResult.json");
+        const filePath = FileUtils.getPath("XMLResult.json");
         res.status(200).sendFile(filePath, (err) => {
             if (err) {
                 console.error('Ошибка при отправке файла:', err);
@@ -88,7 +88,6 @@ class SerializationController {
             try {
                 const convertedData = ModifyingService.mapFields(Array.isArray(result) ? result : [result], req.body.mapping.data);
                 await FileUtils.writeFile(filename, convertedData);
-                console.log(convertedData);
                 await prisma.logs.create({
                     data: {
                         status: 'success',

@@ -1,5 +1,7 @@
+import { HOST, PORT } from "../../../../constants/port";
+
 const getFile = (platform : string) => {
-    fetch("http://localhost:4000/api/" + platform, {
+    fetch(`http://${HOST}:${PORT}/api/` + platform, {
         credentials: "include"
     })
     .then(response => {
