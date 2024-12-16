@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import {FC, useState} from 'react';
 import { useTypedSelector } from '../../hooks/useRedux';
 import Button from "../../UI/Button/Button";
 import { FaPlus } from "react-icons/fa";
@@ -9,7 +9,7 @@ import Spinner from '../../UI/Spinner/Spinner';
 import { colors } from '../../../constants/colors';
 import { SynchronizationStatusEnum } from '../../types/SynchronizationStatusEnum';
 
-const Tasks: React.FC = () => {
+const Synchronization: FC = () => {
     const {
         platform,
         query,
@@ -19,7 +19,7 @@ const Tasks: React.FC = () => {
         planning: { mode: planningMode, selectedDays, time }
     } = useTypedSelector(state => state.tasksSlice);
     const email = useTypedSelector(state => state.userData.email);
-    const [fetchStatus, setFetchStatus] = React.useState<SynchronizationStatusEnum>(SynchronizationStatusEnum.PENDING);
+    const [fetchStatus, setFetchStatus] = useState<SynchronizationStatusEnum>(SynchronizationStatusEnum.PENDING);
 
     const { fetchData, loading } = useHttp();
 
@@ -94,4 +94,4 @@ const Tasks: React.FC = () => {
     );
 };
 
-export default Tasks;
+export default Synchronization;

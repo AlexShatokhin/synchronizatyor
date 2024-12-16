@@ -1,1 +1,1 @@
-"[{\"id\":1,\"fullName\":\"Иванов Иван\",\"login\":\"test@test\",\"password\":\"$2a$10$lQ7h2GmKPkePidbzPXqpfe4o673/QXz1oux/2Y2h73QIUo4ZD0Gea\",\"created_at\":{}}]"
+"[{\"id\":1,\"email\":\"alex@alex\",\"password\":\"$2a$10$oF9kaKfmUr.sC0UmamBq1e2eWJDLsZJgmwFTQn/KASjgHXMG3LCbi\",\"created_at\":{},\"name\":\"Александр\"},{\"id\":2,\"email\":\"ivanov@ivan\",\"password\":\"$2a$10$EwKdZXPZI.3mjlxMGdeIh.SoCDSifbL7z//EBWoNLVf8A/IkPO3te\",\"created_at\":{},\"name\":\"Иванов Иван\"}]"

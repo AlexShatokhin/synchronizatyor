@@ -1,4 +1,5 @@
 const cron = require("node-cron");
+const cuid = require("cuid");
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
@@ -7,19 +8,30 @@ const SerializationController = require('./SerializationController');
 
 class ScheduleController {
     scheduledTasks = {};
+
+    generateId = () => {
+        return parseInt(cuid().slice(-6), 36);
+    }
+
     removeSchedule = async (req, res) => {
         const { taskID } = req.body;
-        if (this.scheduledTasks[sourceType]) {
-            this.scheduledTasks[sourceType].stop();
-            delete this.scheduledTasks[sourceType];
+        console.log(this.scheduledTasks);
+
+        if (this.scheduledTasks[req.session.userId]) {
+            const task = this.scheduledTasks[req.session.userId].find(task => task.taskID === taskID);
+            task.cron.stop();
+            this.scheduledTasks[req.session.userId] = this.scheduledTasks[req.session.userId].filter(task => task.taskID !== taskID);
             await prisma.tasks.deleteMany({
                 where: {
                     id: taskID
                 },
             })
-            return res.status(200).json({ message: `Schedule removed for ${sourceType}` });
+            // this.scheduledTasks[sourceType].stop();
+            // delete this.scheduledTasks[sourceType];
+
+            return res.status(200).json({ message: `Schedule removed for ${taskID}` });
         } else {
-            return res.status(404).json({ message: `No schedule found for ${sourceType}` });
+            return res.status(404).json({ message: `No schedule found for ${taskID}` });
         }
     }
     setSchedule = async (req, res) => {
@@ -51,23 +63,32 @@ class ScheduleController {
     
         // Создать задачу cron
         if(!isSingular){
-            this.scheduledTasks[sourceType] = cron.schedule(cronExpression, async () => {
-                console.log(`Executing task for ${sourceType}`);
-                try {
-                    await controllerMethod(req, res);
-                } catch (error) {
-                    console.error(`Error executing task for ${sourceType}:`, error.message);
-                }
-    
-                //this.scheduledTasks[sourceType].stop();
-            });
+            if(this.scheduledTasks[req.session.userId] === undefined)
+                this.scheduledTasks[req.session.userId] = [];
+
+            const taskID = this.generateId();
+            this.scheduledTasks[req.session.userId].push({
+                taskID,
+                cron: cron.schedule(cronExpression, async () => {
+                    console.log(`Executing task for ${sourceType}`);
+                    try {
+                        await controllerMethod(req, res);
+                    } catch (error) {
+                        console.error(`Error executing task for ${sourceType}:`, error.message);
+                    }
+        
+                    //this.scheduledTasks[sourceType].stop();
+                })
+            })
             await prisma.tasks.create({
                 data: {
+                    id: taskID,
                     source: sourceType,
                     user_id: req.session.userId, 
                 },
             });
-        
+            res.status(200).json({ message: `Schedule set for ${sourceType}`, cronExpression });
+
         } else{
             try{
                 await controllerMethod(req, res);
@@ -76,7 +97,15 @@ class ScheduleController {
                 res.status(400).json({message: `Error executing task for ${sourceType}:`, error: error.message});
             }
         }
-        //res.status(200).json({ message: `Schedule set for ${sourceType}`, cronExpression });
+    }
+
+    getSchedule = async (req, res) => {
+        const tasks = await prisma.tasks.findMany({
+            where: {
+                user_id: req.session.userId
+            }
+        });
+        res.status(200).json(tasks);
     }
 }
 
