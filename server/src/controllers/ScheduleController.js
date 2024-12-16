@@ -35,7 +35,7 @@ class ScheduleController {
         }
     }
     setSchedule = async (req, res) => {
-        const { sourceType, cronExpression, isSingular, ...args } = req.body;
+        const { sourceType, cronExpression, isSingular, name, ...args } = req.body;
         console.log(sourceType, cronExpression, isSingular, args);
         // Проверка валидности cron-выражения
         if (cronExpression && !cron.validate(cronExpression)) {
@@ -83,6 +83,8 @@ class ScheduleController {
             await prisma.tasks.create({
                 data: {
                     id: taskID,
+                    name,
+                    cron_expression: cronExpression,
                     source: sourceType,
                     user_id: req.session.userId, 
                 },
