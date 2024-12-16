@@ -4,10 +4,11 @@ import Button from "../../UI/Button/Button";
 import { FaPlus } from "react-icons/fa";
 import "./synchronization.scss";
 import TaskAccordions from "./components/TaskAccordions/TaskAccordions";
-import useHttp from '../../hooks/useHttp';
+import useFetchData from './api/fetchData';
 import Spinner from '../../UI/Spinner/Spinner';
 import { colors } from '../../../constants/colors';
 import { SynchronizationStatusEnum } from '../../types/SynchronizationStatusEnum';
+import generateCronExpression from './utils/generateCron';
 
 const Synchronization: FC = () => {
     const {
@@ -21,7 +22,8 @@ const Synchronization: FC = () => {
     const email = useTypedSelector(state => state.userData.email);
     const [fetchStatus, setFetchStatus] = useState<SynchronizationStatusEnum>(SynchronizationStatusEnum.PENDING);
 
-    const { fetchData, loading } = useHttp();
+    const { postData, loading } = useFetchData();
+
 
     const handleSyncClick = () => {
         setFetchStatus(SynchronizationStatusEnum.PENDING);
@@ -42,30 +44,12 @@ const Synchronization: FC = () => {
             cronExpression : handleGenerateCron(), 
             isSingular: planningMode === "single"
         };
-        console.log("Sync Data:", syncData);
-
-        fetchData(`http://localhost:4000/api/schedule`, "POST", JSON.stringify(syncData))
+        postData(syncData)
         .then(() => setFetchStatus(SynchronizationStatusEnum.COMPLETE))
         .catch(() => setFetchStatus(SynchronizationStatusEnum.FAIL));      
-
     };
 
-    const generateCronExpression = (days: string[], time: string): string => {
-        const dayMap: { [key: string]: number } = {
-            'Каждый понедельник': 1,
-            'Каждый вторник': 2,
-            'Каждую среду': 3,
-            'Каждый четверг': 4,
-            'Каждую пятницу': 5,
-            'Каждую субботу': 6,
-            'Каждое воскресенье': 0,
-        };
 
-        const [hour, minute] = time.split(':').map(Number);
-        const dayOfWeek = days.map(day => dayMap[day]).join(',');
-
-        return `${minute} ${hour} * * ${dayOfWeek}`;
-    };
 
     const handleGenerateCron = () => {
         if (planningMode === 'recurring' && selectedDays.length > 0 && time)
