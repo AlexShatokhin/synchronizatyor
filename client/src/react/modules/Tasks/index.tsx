@@ -1,40 +1,32 @@
 import { useState, useEffect } from "react";
-import useHttp from "../../hooks/useHttp";
+import { useFetchTasks } from "./api/httpClient";
 
 import Spinner from "../../UI/Spinner/Spinner";
 import { colors } from "../../../constants/colors";
-import TaskItem from "./components/TaskItem";
 
 import "./tasks.scss";
-import EmptyText from "../../UI/EmptyText/EmptyText";
+import renderTasks from "./helpers/renderTasks";
+import { TaskType } from "./types/taskType";
 const Tasks = () => {
-    const [tasks, setTasks] = useState([]);
-    const { fetchData, loading } = useHttp();
+    const [tasks, setTasks] = useState<TaskType[]>([]);
+    const {loading, fetchTasks, deleteTask} = useFetchTasks();
 
     const getTasks = () => {
-        fetchData(`http://localhost:4000/api/schedule`, "GET")
+        fetchTasks()
         .then((response) => setTasks(response))
         .catch((error) => {
             console.log("Error:", error);
         });
     }
 
-    const deleteTask = (id: number) => {
-        fetchData(`http://localhost:4000/api/schedule/`, "DELETE", JSON.stringify({taskID: id}))
+    const handleDeleteTask = (id: number) => {
+        deleteTask(id)
         .then(() => getTasks())
         .catch((error) => {
             console.log("Error:", error);
         });
     }
 
-    const renderTasks = () => {
-        if(tasks.length === 0) {
-            return <EmptyText text="Нет запланированных задач"/>
-        }
-        return tasks.map((task : any) => {
-            return <TaskItem key={task.id} {...task} deleteTask={() => deleteTask(task.id)}/>
-        });
-    }
 
     useEffect(() => {
         getTasks();
@@ -48,7 +40,7 @@ const Tasks = () => {
                 <div className="spinner-container">
                     <Spinner size={90} color={colors.blue}/> 
                 </div>
-                : renderTasks()}
+                : renderTasks(tasks, handleDeleteTask)}
             </div>
         </section>
     )

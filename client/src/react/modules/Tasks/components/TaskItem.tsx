@@ -4,19 +4,14 @@ import { MdDelete } from "react-icons/md";
 import "./task_item.scss";
 import { formatDate } from "../../../utils/formatDate";
 import { formatType } from "../../../utils/formatType";
+import decodeCronExpression from "../../../utils/decodeCron";
+import { TaskType } from "../types/taskType";
 
-type TaskItemPropsType = {
-    id: number,
-    created_at: string,
-    cron_expression: string,
-    source: string,
-    name: string,
-
+type TaskItemPropsType = TaskType & {
     deleteTask: () => void
 }
 
-const TaskItem : FC<TaskItemPropsType> = ({id, created_at, source, name, cron_expression, deleteTask}) => {
-
+const TaskItem : FC<TaskItemPropsType> = ({created_at, source, name, cron_expression, deleteTask}) => {
     return (
         <div className="task-item">
             <p style={{fontWeight: 500}}>{formatType(source)}</p>
@@ -31,13 +26,3 @@ const TaskItem : FC<TaskItemPropsType> = ({id, created_at, source, name, cron_ex
 export default TaskItem;
 
 
-const daysOfWeek = ["ВС", "ПН", "ВТ", "СР", "ЧТ", "ПТ", "СБ"];
-
-const decodeCronExpression = (cronExpression: string): string => {
-    const [minute, hour, , , days] = cronExpression.split(' ');
-
-    const daysArray = days.split(',').map(day => daysOfWeek[parseInt(day)]);
-    const daysString = daysArray.join(', ');
-
-    return `Каждые ${daysString} ${hour}:${minute}`;
-};
