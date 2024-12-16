@@ -11,13 +11,11 @@ type TaskItemPropsType = {
     cron_expression: string,
     source: string,
     name: string,
+
+    deleteTask: () => void
 }
 
-const TaskItem : FC<TaskItemPropsType> = ({id, created_at, source, name, cron_expression}) => {
-
-    const deleteTask = () => {
-        console.log("Delete task:", id);
-    }
+const TaskItem : FC<TaskItemPropsType> = ({id, created_at, source, name, cron_expression, deleteTask}) => {
 
     return (
         <div className="task-item">

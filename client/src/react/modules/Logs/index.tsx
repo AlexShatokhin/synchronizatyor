@@ -4,6 +4,7 @@ import LogItem from "./components/LogItem/LogItem";
 import "./logs.scss"
 import { SynchronizationStatusEnum } from "../../types/SynchronizationStatusEnum";
 import LogFilters from "./components/LogFitlers/LogFilters";
+import EmptyText from "../../UI/EmptyText/EmptyText";
 
 const Logs = () => {
     const logs = useTypedSelector(state => state.logSlice.logs);
@@ -12,6 +13,8 @@ const Logs = () => {
         status === "success" ? SynchronizationStatusEnum.COMPLETE : SynchronizationStatusEnum.FAIL;
     
     const renderLogs = () => {
+        if(logs.length === 0) 
+            return <EmptyText text="Логи отсутствуют"/>
         return logs.map((log, index) => 
             <LogItem 
                 key={index} 
