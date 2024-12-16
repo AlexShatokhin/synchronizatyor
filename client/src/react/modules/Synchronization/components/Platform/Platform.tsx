@@ -61,7 +61,8 @@ const Platform: React.FC = () => {
                             onChange={(e) => handleDbDataChange("user", e.target.value)}
                         />
                         <Input
-                            placeholder="qwerty"
+                            placeholder="password12345"
+                            type='password'
                             value={dbData.password}
                             onChange={(e) => handleDbDataChange("password", e.target.value)}
                         />
