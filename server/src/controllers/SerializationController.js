@@ -1,4 +1,5 @@
 const FileUtils = require('../utils/FileUtils');
+const path = require('path');
 const ModifyingService = require("../services/ModifyingService");
 const parseString = require("xml2js").parseString;
 const { PrismaClient } = require('@prisma/client');
@@ -12,10 +13,20 @@ class SerializationController {
         return text.replace(/\n/g, '').replace(/\r/g, '');
     }
 
+    getJSON = async (req, res) => {
+        const filePath = path.join(__dirname, "../", "utilsjsonResult.json");
+        res.status(200).sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Ошибка при отправке файла:', err);
+                res.status(500).send('Ошибка при загрузке файла');
+            }
+        });
+    }
+
     handleJSON = async (req, res) => {
         const data = JSON.parse(this.removeNewlines(req.body.data));
         const convertedData = ModifyingService.mapFields(Array.isArray(data) ? data : [data], req.body.mapping.data);
-        const filename = `jsonResult.json`;
+        const filename = `JSONResult.json`;
 
         try {
             await FileUtils.writeFile(filename, convertedData);
@@ -47,7 +58,17 @@ class SerializationController {
         }
     }
 
-    handleXml = (req, res) => {
+    getXML = async (req, res) => {
+        const filePath = path.join(__dirname, "../", "utilsxmlResult.json");
+        res.status(200).sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Ошибка при отправке файла:', err);
+                res.status(500).send('Ошибка при загрузке файла');
+            }
+        });
+    }
+
+    handleXML = (req, res) => {
         const data = this.removeNewlines(req.body.data);
 
         parseString(data, async (err, result) => {
@@ -62,7 +83,7 @@ class SerializationController {
                 });
                 return res.status(500).send({message: "Error parsing XML"});
             }
-            const filename = `xmlResult.json`;
+            const filename = `XMLResult.json`;
 
             try {
                 const convertedData = ModifyingService.mapFields(Array.isArray(result) ? result : [result], req.body.mapping.data);

@@ -52,7 +52,7 @@ class ScheduleController {
                 controllerMethod = DatabaseController.handlePostgres;
                 break;
             case 'xml':
-                controllerMethod = SerializationController.handleXml;
+                controllerMethod = SerializationController.handleXML;
                 break;
             case 'json':
                 controllerMethod = SerializationController.handleJSON;

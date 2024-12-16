@@ -8,6 +8,17 @@ const {sendEmail} = require("../services/EmailService");
 const ModifyingService = require('../services/ModifyingService');
 
 class DatabaseController {
+
+    async getMySQL(req, res){
+        const filePath = __dirname + "utilsMySQLResult.json";
+        res.status(200).sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Ошибка при отправке файла:', err);
+                res.status(500).send('Ошибка при загрузке файла');
+            }
+        });
+    }
+
     async handleMySQL(req, res){
         const connection = mysql.createConnection({
             host: req.body.host,
@@ -19,7 +30,7 @@ class DatabaseController {
         try {
             const [result] = await ss.query(req.body.query);
             const convertedData = ModifyingService.mapFields(Array.isArray(result) ? result : [result], req.body.mapping.data);
-            const fileName = "result.json";
+            const fileName = "MySQLResult.json";
             await FileUtils.writeFile(fileName, JSON.stringify(convertedData));
             await prisma.logs.create({
                 data:{
@@ -51,6 +62,16 @@ class DatabaseController {
         }
     }
 
+    async getPostgres(req, res){
+        const filePath = path.join(__dirname, "../", "utilsPostgresResult.json");
+        res.status(200).sendFile(filePath, (err) => {
+            if (err) {
+                console.error('Ошибка при отправке файла:', err);
+                res.status(500).send('Ошибка при загрузке файла');
+            }
+        });
+    }
+
     async handlePostgres(req, res){
         const client = new Client({
             host: req.body.host,
@@ -62,7 +83,7 @@ class DatabaseController {
         try {
             await client.connect();
             const result = await client.query(req.body.query);
-            const fileName = `result.json`;
+            const fileName = `PostgresResult.json`;
             await FileUtils.writeFile(fileName, JSON.stringify(result.rows));
             if(req.body.email){
                 sendEmail(req.body.email, "Query executed successfully", "The result is attached", fileName);

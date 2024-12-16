@@ -10,6 +10,9 @@ import { colors } from '../../../constants/colors';
 import { SynchronizationStatusEnum } from '../../types/SynchronizationStatusEnum';
 import generateCronExpression from './utils/generateCron';
 
+import useHttp from '../../hooks/useHttp';
+import getFile from './api/getFile';
+
 const Synchronization: FC = () => {
     const {
         platform,
@@ -23,6 +26,7 @@ const Synchronization: FC = () => {
     const [fetchStatus, setFetchStatus] = useState<SynchronizationStatusEnum>(SynchronizationStatusEnum.PENDING);
 
     const { postData, loading } = useFetchData();
+    const { fetchData } = useHttp();
 
 
     const handleSyncClick = () => {
@@ -45,10 +49,13 @@ const Synchronization: FC = () => {
             isSingular: planningMode === "single"
         };
         postData(syncData)
-        .then(() => setFetchStatus(SynchronizationStatusEnum.COMPLETE))
+        .then(() => {
+            setFetchStatus(SynchronizationStatusEnum.COMPLETE);
+            if(planningMode === 'single')
+                getFile(platform);
+        })
         .catch(() => setFetchStatus(SynchronizationStatusEnum.FAIL));      
     };
-
 
 
     const handleGenerateCron = () => {
